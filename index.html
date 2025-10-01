@@ -3,10 +3,730 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>My Portfolio</title>
+  <title>Michael McFarland | Portfolio</title>
+  <style>
+    :root {
+      color-scheme: light dark;
+      --waypoint-offset: 20px;
+      --tab-guard-delay: 140ms;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Avenir", "Avenir Next", "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      line-height: 1.6;
+      background-color: #f7f7f7;
+      color: #222;
+    }
+
+    header {
+      padding: 3rem 1.5rem 1rem;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: clamp(2rem, 4vw, 3rem);
+    }
+
+    header p {
+      margin: 0;
+      font-size: 1rem;
+      color: #555;
+    }
+
+    main {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 1.5rem 3rem;
+      display: flex;
+      flex-direction: column;
+      gap: 3rem;
+    }
+
+    section {
+      scroll-margin-top: 5rem;
+    }
+
+    section h2 {
+      margin: 0 0 1.5rem;
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      border-bottom: 1px solid #ccc;
+      padding-bottom: 0.5rem;
+    }
+
+    .examples {
+      display: grid;
+      gap: 1rem;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      grid-auto-rows: minmax(200px, auto);
+      grid-auto-flow: dense;
+    }
+
+    .examples .feature {
+      grid-column: span 2;
+    }
+
+    .examples .tall {
+      grid-row: span 2;
+    }
+
+    @media (max-width: 899px) {
+      .examples {
+        grid-auto-rows: auto;
+      }
+
+      .examples .feature,
+      .examples .tall {
+        grid-column: auto;
+        grid-row: auto;
+      }
+    }
+
+    article {
+      background-color: #fff;
+      padding: 1.25rem;
+      border: 1px solid #e0e0e0;
+      border-radius: 0.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      min-height: 100%;
+    }
+
+    article:focus-visible {
+      outline: none;
+    }
+
+    article:is(:hover, :focus-within) {
+      border-color: #000;
+    }
+
+    article h3 {
+      margin: 0;
+      font-size: 1.1rem;
+      color: #222;
+    }
+
+    article p {
+      margin: 0;
+      color: #555;
+    }
+
+    figure {
+      margin: 0;
+    }
+
+    img,
+    video {
+      display: block;
+      width: 100%;
+      height: auto;
+      border-radius: 0.35rem;
+    }
+
+    .waypoint-nav {
+      position: fixed;
+      inset: auto clamp(1rem, 5vw, 4rem) 1.5rem auto;
+      display: none;
+      z-index: 20;
+    }
+
+    .waypoint-nav ol {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .waypoint-nav a {
+      color: #333;
+      text-decoration: none;
+    }
+
+    .theatre-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.85);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: clamp(1rem, 5vw, 3rem);
+      z-index: 40;
+    }
+
+    body.is-theatre {
+      overflow: hidden;
+    }
+
+    body.is-theatre .theatre-backdrop {
+      display: flex;
+    }
+
+    .theatre-shell {
+      position: relative;
+      width: min(960px, 90vw);
+      max-height: 90vh;
+      background: #fff;
+      border-radius: 0.75rem;
+      border: 2px solid #111;
+      padding: clamp(1.5rem, 3vw, 2.5rem);
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.35);
+      overflow: auto;
+    }
+
+    .theatre-content {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .theatre-content article {
+      padding: 0;
+      border: none;
+      border-radius: 0;
+      background: transparent;
+      gap: 1rem;
+    }
+
+    .theatre-close {
+      position: sticky;
+      top: 0;
+      margin-left: auto;
+      margin-bottom: 1rem;
+      background: #000;
+      color: #fff;
+      border: none;
+      border-radius: 999px;
+      padding: 0.35rem 0.85rem;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+
+    .theatre-close:focus-visible {
+      outline: 2px solid #000;
+      outline-offset: 3px;
+      background: #222;
+    }
+
+    @media (min-width: 900px) {
+      .waypoint-nav {
+        display: block;
+        top: 50%;
+        transform: translateY(-50%);
+        right: clamp(1rem, 5vw, 4rem);
+        bottom: auto;
+      }
+
+      .waypoint-nav ol {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+        align-items: flex-end;
+        position: relative;
+      }
+
+      .waypoint-nav ol::before {
+        content: '';
+        position: absolute;
+        top: 1.25rem;
+        bottom: 1.25rem;
+        right: 0.6rem;
+        width: 2px;
+        background: #d0d0d0;
+      }
+
+      .waypoint-nav li {
+        position: relative;
+      }
+
+      .waypoint-nav a {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.75rem;
+        font-size: 0.95rem;
+        color: #333;
+        text-align: right;
+        padding: 0.125rem 0;
+      }
+
+      .waypoint-nav a::after {
+        content: '';
+        width: 1.1rem;
+        height: 1.1rem;
+        border-radius: 999px;
+        border: 2px solid #333;
+        background-color: #fff;
+        transition: background-color 0.25s ease, transform 0.25s ease, border-color 0.25s ease;
+        box-shadow: 0 0 0 2px #f7f7f7;
+      }
+
+      .waypoint-nav a:is(:hover, :focus-visible) {
+        color: #000;
+      }
+
+      .waypoint-nav a:is(:hover, :focus-visible)::after {
+        border-color: #000;
+      }
+
+      .waypoint-nav a.is-active::after {
+        background-color: #000;
+        border-color: #000;
+        transform: scale(1.25);
+      }
+
+      main {
+        padding-right: clamp(5rem, 14vw, 10rem);
+        width: min(960px, calc(100vw - 14rem));
+      }
+    }
+
+    audio,
+    video {
+      width: 100%;
+    }
+
+    footer {
+      max-width: 960px;
+      margin: 0 auto 3rem;
+      padding: 0 1.5rem;
+      font-size: 0.9rem;
+      color: #555;
+    }
+
+    footer p {
+      margin: 0;
+    }
+  </style>
 </head>
 <body>
-  <h1>Hello, world</h1>
-  <p>This is my first GitHub Pages site.</p>
+  <header>
+    <h1>Michael McFarland</h1>
+    <p>Artist • Technologist • Storyteller</p>
+  </header>
+
+  <nav class="waypoint-nav" aria-label="Section progress">
+    <ol>
+      <li><a href="#subheader-1" tabindex="-1">Subheader 1</a></li>
+      <li><a href="#subheader-2" tabindex="-1">Subheader 2</a></li>
+      <li><a href="#subheader-3" tabindex="-1">Subheader 3</a></li>
+      <li><a href="#subheader-4" tabindex="-1">Subheader 4</a></li>
+    </ol>
+  </nav>
+
+  <div class="theatre-backdrop" aria-hidden="true">
+    <div class="theatre-shell" role="dialog" aria-modal="true" aria-label="Focused project view">
+      <button type="button" class="theatre-close">Close</button>
+      <div class="theatre-content"></div>
+    </div>
+  </div>
+
+  <main>
+    <section id="subheader-1">
+      <h2>Subheader 1</h2>
+      <div class="examples">
+        <article class="feature">
+          <h3>Example 1</h3>
+          <p>Short description for this project or highlight. Keep it concise and focused on the key takeaway.</p>
+          <audio controls preload="none">
+            <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+          </audio>
+          <p>Use this space to mention collaborators, a release date, or how the piece was shared with listeners.</p>
+        </article>
+        <article>
+          <h3>Example 2</h3>
+          <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=960&q=80" alt="Close-up of audio mixing equipment">
+          <p>A brief line describing the context, your role, or why this matters to visitors exploring your work.</p>
+          <p><strong>Key insight:</strong> Document a single sentence takeaway or performance metric here.</p>
+        </article>
+        <article class="tall">
+          <h3>Example 3</h3>
+          <p>Explain the problem you tackled and how your approach delivered value in approachable language.</p>
+          <ul>
+            <li>Outcome one in plain language.</li>
+            <li>Outcome two with a concrete result.</li>
+            <li>Outcome three that speaks to impact.</li>
+          </ul>
+          <blockquote>"A short testimonial reinforces why this work resonated."</blockquote>
+        </article>
+        <article>
+          <h3>Example 4</h3>
+          <p>Capture a behind-the-scenes detail, process note, or personal reflection to humanize the work.</p>
+          <p><em>Tools:</em> Note the software, instruments, or collaborators that were essential.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="subheader-2">
+      <h2>Subheader 2</h2>
+      <div class="examples">
+        <article class="feature">
+          <h3>Example 1</h3>
+          <p>Brief description highlighting the concept, medium, or collaborators involved.</p>
+          <figure>
+            <img src="https://via.placeholder.com/960x540" alt="Placeholder visual preview">
+            <figcaption>Optional caption that describes the visuals shown above.</figcaption>
+          </figure>
+        </article>
+        <article class="tall">
+          <h3>Example 2</h3>
+          <p>Use this slot for notes on process, inspiration, or technology used to bring the idea to life.</p>
+          <ol>
+            <li>Outline the initial spark or challenge.</li>
+            <li>Note a pivotal decision that shaped the outcome.</li>
+            <li>Share the final result or where it lives now.</li>
+          </ol>
+        </article>
+        <article>
+          <h3>Example 3</h3>
+          <p>Share a quick testimonial, audience reaction, or a quote that captures the spirit of the work.</p>
+        </article>
+        <article>
+          <h3>Example 4</h3>
+          <img src="https://images.unsplash.com/photo-1515169067865-5387ec356754?auto=format&fit=crop&w=960&q=80" alt="Detail of a creative studio mood board">
+          <p>Link to supporting documents, press mentions, or a deeper dive for curious visitors.</p>
+          <p><a href="https://example.com" target="_blank" rel="noreferrer">Read the full story</a></p>
+        </article>
+      </div>
+    </section>
+
+    <section id="subheader-3">
+      <h2>Subheader 3</h2>
+      <div class="examples">
+        <article class="feature">
+          <h3>Example 1</h3>
+          <p>Summarize the story arc or learning moment you want visitors to take away.</p>
+          <video controls preload="metadata">
+            <source src="https://samplelib.com/lib/preview/mp4/sample-5s.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+        </article>
+        <article>
+          <h3>Example 2</h3>
+          <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=960&q=80" alt="Audience watching a performance in a dark venue">
+          <p>Highlight your contribution, mention collaborators, and note any recognition or press.</p>
+        </article>
+        <article class="tall">
+          <h3>Example 3</h3>
+          <p>Invite visitors to explore supporting links, documentation, or extended cuts.</p>
+          <p><strong>Watch next:</strong> Curate a short playlist or sequence to keep the journey moving.</p>
+          <p><strong>Takeaway:</strong> Emphasize a measurable result or audience response.</p>
+        </article>
+        <article>
+          <h3>Example 4</h3>
+          <p>Share a future-facing note on how this work informs what you are building next.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="subheader-4">
+      <h2>Subheader 4</h2>
+      <div class="examples">
+        <article class="feature">
+          <h3>Example 1</h3>
+          <p>Present a flagship project, residency, or initiative that anchors this section.</p>
+          <figure>
+            <img src="https://via.placeholder.com/960x400" alt="Project timeline graphic placeholder">
+            <figcaption>Summarize the phases or milestones shown in the graphic.</figcaption>
+          </figure>
+        </article>
+        <article>
+          <h3>Example 2</h3>
+          <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=960&q=80" alt="Developer workstation with multiple monitors">
+          <p>Call out metrics, milestones, or a key lesson learned that shaped the project direction.</p>
+          <ul>
+            <li>Stakeholder alignment in under four weeks.</li>
+            <li>Prototype to delivery in two iterations.</li>
+          </ul>
+        </article>
+        <article class="tall">
+          <h3>Example 3</h3>
+          <p>Outline the narrative in three beats so visitors can skim and understand the arc quickly.</p>
+          <p><strong>Challenge:</strong> Describe the initial constraint in clear language.</p>
+          <p><strong>Approach:</strong> Share how you organized collaborators, tooling, and timelines.</p>
+          <p><strong>Result:</strong> State the outcome, audience impact, or next step it enabled.</p>
+        </article>
+        <article>
+          <h3>Example 4</h3>
+          <p>Offer a personal reflection, gratitude note, or call-to-action inviting follow-up.</p>
+          <p><em>Get in touch</em> if you would like to remix, extend, or collaborate on the next chapter.</p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>Say hello at <a href="mailto:michael@example.com">michael@example.com</a> • Connect on <a href="https://github.com/yourusername">GitHub</a></p>
+  </footer>
+
+  <script>
+    (() => {
+      const sections = Array.from(document.querySelectorAll('main > section'));
+      const waypointLinks = Array.from(document.querySelectorAll('.waypoint-nav a'));
+      const tiles = Array.from(document.querySelectorAll('.examples article'));
+      const theatreBackdrop = document.querySelector('.theatre-backdrop');
+      const theatreShell = document.querySelector('.theatre-shell');
+      const theatreContent = document.querySelector('.theatre-content');
+      const theatreClose = document.querySelector('.theatre-close');
+      const body = document.body;
+
+      if (!sections.length || !waypointLinks.length || !tiles.length || !theatreBackdrop || !theatreContent || !theatreClose) {
+        return;
+      }
+
+      let theatreState = { open: false, sourceTile: null };
+      let tabGuardActive = false;
+      let tabGuardTimer = null;
+
+      const engageTabGuard = () => {
+        tabGuardActive = true;
+        if (tabGuardTimer) {
+          clearTimeout(tabGuardTimer);
+        }
+        tabGuardTimer = setTimeout(() => {
+        tabGuardActive = false;
+        tabGuardTimer = null;
+      }, parseInt(getComputedStyle(document.documentElement).getPropertyValue('--tab-guard-delay'), 10) || 140);
+      };
+
+      const pauseMedia = (root) => {
+        root.querySelectorAll('audio, video').forEach((media) => {
+          media.pause();
+          try {
+            media.currentTime = 0;
+          } catch (error) {
+            /* no-op */
+          }
+        });
+      };
+
+      const closeTheatre = ({ restoreFocus = true } = {}) => {
+        if (!theatreState.open) {
+          return;
+        }
+
+        pauseMedia(theatreContent);
+        body.classList.remove('is-theatre');
+        theatreBackdrop.setAttribute('aria-hidden', 'true');
+        theatreContent.innerHTML = '';
+        const origin = theatreState.sourceTile;
+        theatreState = { open: false, sourceTile: null };
+
+        if (restoreFocus && origin) {
+          requestAnimationFrame(() => origin.focus());
+        }
+      };
+
+      const openTheatre = (tile) => {
+        if (!tile) {
+          return;
+        }
+
+        pauseMedia(tile);
+
+        if (theatreState.open) {
+          closeTheatre({ restoreFocus: false });
+        }
+
+        theatreState = { open: true, sourceTile: tile };
+        body.classList.add('is-theatre');
+        theatreBackdrop.setAttribute('aria-hidden', 'false');
+        theatreContent.innerHTML = '';
+        const clone = tile.cloneNode(true);
+        clone.removeAttribute('tabindex');
+        clone.classList.add('is-theatre');
+        theatreContent.appendChild(clone);
+        if (theatreShell) {
+          theatreShell.scrollTop = 0;
+        }
+
+        const media = Array.from(theatreContent.querySelectorAll('audio, video'));
+        media.forEach((mediaEl) => {
+          mediaEl.currentTime = 0;
+          const attempt = mediaEl.play();
+          if (attempt && typeof attempt.catch === 'function') {
+            attempt.catch(() => {});
+          }
+        });
+
+        theatreClose.focus();
+      };
+
+      tiles.forEach((tile) => {
+        tile.tabIndex = 0;
+        tile.addEventListener('dblclick', () => openTheatre(tile));
+        tile.addEventListener('keydown', (event) => {
+          if ((event.key === 'Enter' || event.key === 'Return') && !event.shiftKey && !event.ctrlKey && !event.metaKey && !event.altKey) {
+            event.preventDefault();
+            openTheatre(tile);
+          }
+        });
+      });
+
+      const focusTile = (index) => {
+        const tile = tiles[index];
+        if (!tile) {
+          return;
+        }
+
+        tile.focus();
+        tile.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      };
+
+      theatreClose.addEventListener('click', () => closeTheatre());
+      theatreBackdrop.addEventListener('click', (event) => {
+        if (event.target === theatreBackdrop) {
+          closeTheatre();
+        }
+      });
+
+      const clearHash = () => {
+        if (history.replaceState && window.location.hash) {
+          history.replaceState(null, '', window.location.pathname + window.location.search);
+        }
+      };
+
+      const setActive = (id) => {
+        waypointLinks.forEach((link) => {
+          if (link.hash === `#${id}`) {
+            link.classList.add('is-active');
+          } else {
+            link.classList.remove('is-active');
+          }
+        });
+        clearHash();
+      };
+
+      const activateByScrollPosition = () => {
+        const midpoint = window.scrollY + window.innerHeight * 0.45;
+        let current = sections[0];
+
+        for (const section of sections) {
+          if (midpoint >= section.offsetTop) {
+            current = section;
+          }
+        }
+
+        if (current) {
+          setActive(current.id);
+        }
+      };
+
+      if ('IntersectionObserver' in window) {
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              setActive(entry.target.id);
+            }
+          });
+        }, {
+          root: null,
+          threshold: 0.45
+        });
+
+        sections.forEach((section) => observer.observe(section));
+      } else {
+        window.addEventListener('scroll', activateByScrollPosition, { passive: true });
+        window.addEventListener('resize', activateByScrollPosition);
+        activateByScrollPosition();
+      }
+
+      waypointLinks.forEach((link) => {
+        link.addEventListener('click', (event) => {
+          event.preventDefault();
+          const targetId = link.hash.slice(1);
+          const targetSection = document.getElementById(targetId);
+
+          if (targetId === 'subheader-1') {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          } else if (targetSection) {
+            const rawOffset = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--waypoint-offset'));
+            const offset = Number.isFinite(rawOffset) ? rawOffset : 80;
+            const targetPosition = targetSection.getBoundingClientRect().top + window.scrollY - offset;
+            window.scrollTo({ top: targetPosition, behavior: 'smooth' });
+          }
+
+          setActive(targetId);
+        });
+      });
+
+      document.addEventListener('keydown', (event) => {
+        const key = event.key;
+
+        if (key === 'Escape' && theatreState.open) {
+          event.preventDefault();
+          closeTheatre();
+          return;
+        }
+
+        if ((key === ' ' || key === 'Spacebar') && !event.ctrlKey && !event.metaKey && !event.altKey) {
+          if (theatreState.open) {
+            event.preventDefault();
+            closeTheatre();
+            return;
+          }
+
+          const activeTile = document.activeElement ? document.activeElement.closest('.examples article') : null;
+          if (activeTile) {
+            event.preventDefault();
+            openTheatre(activeTile);
+          }
+          return;
+        }
+
+        if (key !== 'Tab' || event.ctrlKey || event.metaKey || event.altKey) {
+          return;
+        }
+
+        if (theatreState.open) {
+          return;
+        }
+
+        const activeTile = document.activeElement ? document.activeElement.closest('.examples article') : null;
+
+        if (!activeTile) {
+          return;
+        }
+
+        const currentIndex = tiles.indexOf(activeTile);
+
+        if (currentIndex === -1) {
+          return;
+        }
+
+        if (tabGuardActive) {
+          event.preventDefault();
+          return;
+        }
+
+        event.preventDefault();
+        engageTabGuard();
+        const direction = event.shiftKey ? -1 : 1;
+        const nextIndex = (currentIndex + direction + tiles.length) % tiles.length;
+        requestAnimationFrame(() => focusTile(nextIndex));
+      });
+
+      const initialTarget = window.location.hash.slice(1);
+      if (initialTarget) {
+        const match = sections.find((section) => section.id === initialTarget);
+        setActive(match ? match.id : sections[0].id);
+      } else {
+        setActive(sections[0].id);
+      }
+    })();
+  </script>
+
 </body>
 </html>
