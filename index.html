@@ -84,54 +84,6 @@
     }
 
     @media (max-width: 899px) {
-      .rail-toggle {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.35rem;
-      }
-
-      .waypoint-nav {
-        display: block;
-        position: fixed;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        width: clamp(220px, 75vw, 300px);
-        background: #fff;
-        padding: 4.5rem 1.75rem 2rem;
-        box-shadow: -18px 0 35px rgba(0, 0, 0, 0.18);
-        transform: translateX(100%);
-        transition: transform 0.3s ease;
-        pointer-events: none;
-        z-index: 40;
-      }
-
-      body.is-rail-open .waypoint-nav {
-        transform: translateX(0);
-        pointer-events: auto;
-      }
-
-      .waypoint-nav ol {
-        display: flex;
-        flex-direction: column;
-        gap: 1.5rem;
-        align-items: flex-start;
-        position: static;
-      }
-
-      .waypoint-nav ol::before {
-        display: none;
-      }
-
-      .waypoint-nav a {
-        padding: 0.25rem 0;
-        font-size: 1.05rem;
-      }
-
-      .waypoint-nav a::after {
-        display: none;
-      }
-
       .examples {
         grid-auto-rows: auto;
       }
@@ -201,38 +153,6 @@
     .waypoint-nav a {
       color: #333;
       text-decoration: none;
-    }
-
-    .rail-toggle {
-      display: none;
-      margin-left: auto;
-      padding: 0.35rem 0.85rem;
-      font-size: 0.9rem;
-      border: 1px solid #333;
-      border-radius: 999px;
-      background: #fff;
-      color: #111;
-    }
-
-    .rail-toggle:is(:hover, :focus-visible) {
-      background: #111;
-      color: #fff;
-      outline: none;
-    }
-
-    .rail-backdrop {
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.35);
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.25s ease;
-      z-index: 30;
-    }
-
-    body.is-rail-open .rail-backdrop {
-      opacity: 1;
-      pointer-events: auto;
     }
 
     .theatre-backdrop {
@@ -394,10 +314,9 @@
   <header>
     <h1>Michael McFarland</h1>
     <p>Artist • Technologist • Storyteller</p>
-    <button class="rail-toggle" type="button" aria-controls="waypoint-nav" aria-expanded="false">Menu</button>
   </header>
 
-  <nav class="waypoint-nav" id="waypoint-nav" aria-label="Section progress">
+  <nav class="waypoint-nav" aria-label="Section progress">
     <ol>
       <li><a href="#subheader-1" tabindex="-1">Subheader 1</a></li>
       <li><a href="#subheader-2" tabindex="-1">Subheader 2</a></li>
@@ -405,7 +324,6 @@
       <li><a href="#subheader-4" tabindex="-1">Subheader 4</a></li>
     </ol>
   </nav>
-  <div class="rail-backdrop" hidden></div>
 
   <div class="theatre-backdrop" aria-hidden="true">
     <div class="theatre-shell" role="dialog" aria-modal="true" aria-label="Focused project view">
@@ -562,17 +480,13 @@
       const theatreShell = document.querySelector('.theatre-shell');
       const theatreContent = document.querySelector('.theatre-content');
       const theatreClose = document.querySelector('.theatre-close');
-      const railToggle = document.querySelector('.rail-toggle');
-      const railBackdrop = document.querySelector('.rail-backdrop');
       const body = document.body;
-      const desktopQuery = window.matchMedia('(min-width: 900px)');
 
       if (!sections.length || !waypointLinks.length || !tiles.length || !theatreBackdrop || !theatreContent || !theatreClose) {
         return;
       }
 
       let theatreState = { open: false, sourceTile: null };
-      let railState = { open: false };
       let tabGuardActive = false;
       let tabGuardTimer = null;
 
@@ -582,9 +496,9 @@
           clearTimeout(tabGuardTimer);
         }
         tabGuardTimer = setTimeout(() => {
-          tabGuardActive = false;
-          tabGuardTimer = null;
-        }, parseInt(getComputedStyle(document.documentElement).getPropertyValue('--tab-guard-delay'), 10) || 140);
+        tabGuardActive = false;
+        tabGuardTimer = null;
+      }, parseInt(getComputedStyle(document.documentElement).getPropertyValue('--tab-guard-delay'), 10) || 140);
       };
 
       const pauseMedia = (root) => {
@@ -596,51 +510,6 @@
             /* no-op */
           }
         });
-      };
-
-      const setRailLinkTabState = (enabled) => {
-        waypointLinks.forEach((link) => {
-          link.tabIndex = enabled ? 0 : -1;
-        });
-      };
-
-      const closeRail = ({ restoreFocus = true } = {}) => {
-        if (!railState.open) {
-          return;
-        }
-
-        body.classList.remove('is-rail-open');
-        railState = { open: false };
-        if (railBackdrop) {
-          railBackdrop.hidden = true;
-        }
-        setRailLinkTabState(false);
-        if (railToggle) {
-          railToggle.setAttribute('aria-expanded', 'false');
-          if (restoreFocus) {
-            requestAnimationFrame(() => railToggle.focus());
-          }
-        }
-      };
-
-      const openRail = () => {
-        if (railState.open) {
-          return;
-        }
-
-        railState = { open: true };
-        body.classList.add('is-rail-open');
-        if (railBackdrop) {
-          railBackdrop.hidden = false;
-        }
-        if (railToggle) {
-          railToggle.setAttribute('aria-expanded', 'true');
-        }
-        setRailLinkTabState(true);
-        const firstLink = waypointLinks[0];
-        if (firstLink) {
-          requestAnimationFrame(() => firstLink.focus());
-        }
       };
 
       const closeTheatre = ({ restoreFocus = true } = {}) => {
@@ -705,40 +574,6 @@
           }
         });
       });
-
-      if (railToggle) {
-        railToggle.addEventListener('click', () => {
-          if (railState.open) {
-            closeRail();
-          } else {
-            openRail();
-          }
-        });
-      }
-
-      if (railBackdrop) {
-        railBackdrop.addEventListener('click', () => closeRail());
-      }
-
-      const handleDesktopChange = (event) => {
-        if (event.matches) {
-          closeRail({ restoreFocus: false });
-        }
-      };
-
-      if (desktopQuery && typeof desktopQuery.addEventListener === 'function') {
-        desktopQuery.addEventListener('change', handleDesktopChange);
-      } else if (desktopQuery) {
-        desktopQuery.addListener(handleDesktopChange);
-      }
-
-      setRailLinkTabState(false);
-      if (railToggle) {
-        railToggle.setAttribute('aria-expanded', 'false');
-      }
-      if (railBackdrop) {
-        railBackdrop.hidden = true;
-      }
 
       const focusTile = (index) => {
         const tile = tiles[index];
@@ -824,28 +659,16 @@
           }
 
           setActive(targetId);
-
-          if (railState.open) {
-            closeRail();
-          }
         });
       });
 
       document.addEventListener('keydown', (event) => {
         const key = event.key;
 
-        if (key === 'Escape') {
-          if (theatreState.open) {
-            event.preventDefault();
-            closeTheatre();
-            return;
-          }
-
-          if (railState.open) {
-            event.preventDefault();
-            closeRail();
-            return;
-          }
+        if (key === 'Escape' && theatreState.open) {
+          event.preventDefault();
+          closeTheatre();
+          return;
         }
 
         if ((key === ' ' || key === 'Spacebar') && !event.ctrlKey && !event.metaKey && !event.altKey) {
@@ -868,11 +691,6 @@
         }
 
         if (theatreState.open) {
-          event.preventDefault();
-          return;
-        }
-
-        if (railState.open) {
           return;
         }
 
