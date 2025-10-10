@@ -8,7 +8,6 @@
     :root {
       color-scheme: light dark;
       --waypoint-offset: 20px;
-      --tab-guard-delay: 140ms;
     }
 
     * {
@@ -47,6 +46,25 @@
       color: #555;
     }
 
+    .header-meta {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 1.25rem;
+      font-size: 0.95rem;
+      letter-spacing: 0.01em;
+    }
+
+    .header-meta a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .header-meta a:is(:hover, :focus-visible) {
+      text-decoration: underline;
+    }
+
     main {
       max-width: 960px;
       margin: 0 auto;
@@ -79,6 +97,10 @@
       grid-column: span 2;
     }
 
+    .examples .full-width {
+      grid-column: 1 / -1;
+    }
+
     .examples .tall {
       grid-row: span 2;
     }
@@ -89,7 +111,8 @@
       }
 
       .examples .feature,
-      .examples .tall {
+      .examples .tall,
+      .examples .full-width {
         grid-column: auto;
         grid-row: auto;
       }
@@ -139,6 +162,137 @@
       border-radius: 0.35rem;
     }
 
+    .video-embed {
+      position: relative;
+      width: 100%;
+      padding-bottom: var(--video-aspect, 56.25%);
+      border-radius: 0.75rem;
+      overflow: hidden;
+      background-color: #000;
+    }
+
+    .video-embed + .video-embed {
+      margin-top: 0.75rem;
+    }
+
+    .video-embed iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    .video-embed__overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 0;
+      padding: 0;
+      cursor: pointer;
+      background: none;
+      transition: transform 0.2s ease;
+    }
+
+    .video-embed__overlay::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.55));
+      opacity: 0.85;
+      z-index: 1;
+      transition: opacity 0.25s ease;
+    }
+
+    .video-embed__overlay:focus-visible {
+      outline: 2px solid #fff;
+      outline-offset: 3px;
+    }
+
+    .video-embed__media {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .video-embed__media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .video-embed__label {
+      position: absolute;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 3;
+      padding: 0.25rem 0.6rem;
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      color: #fff;
+      background: rgba(0, 0, 0, 0.55);
+      border-radius: 999px;
+      backdrop-filter: blur(4px);
+      pointer-events: none;
+    }
+
+    .video-embed__play {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      place-items: center;
+      width: clamp(3rem, 12vw, 4rem);
+      height: clamp(3rem, 12vw, 4rem);
+      border-radius: 999px;
+      background: rgba(0, 0, 0, 0.55);
+      border: 2px solid rgba(255, 255, 255, 0.7);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+      transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease;
+    }
+
+    .video-embed__play::before {
+      content: '';
+      border-style: solid;
+      border-width: 0.6em 0 0.6em 1em;
+      border-color: transparent transparent transparent #fff;
+      margin-left: 0.1em;
+    }
+
+    .video-embed__overlay:is(:hover, :focus-visible)::before {
+      opacity: 0.95;
+    }
+
+    .video-embed__overlay:is(:hover, :focus-visible) .video-embed__play {
+      background: rgba(0, 0, 0, 0.75);
+      border-color: #fff;
+      transform: scale(1.08);
+    }
+
+    .spotify-stack {
+      display: flex;
+      flex-direction: column;
+      border-radius: 0.75rem;
+      overflow: hidden;
+    }
+
+    .spotify-stack .spotify-embed {
+      display: block;
+      width: 100%;
+      height: 120px;
+      border: 0;
+      margin: 0;
+    }
+
+    .spotify-stack .spotify-embed + .spotify-embed {
+      margin-top: -30px;
+    }
+
     .waypoint-nav {
       position: fixed;
       inset: auto clamp(1rem, 5vw, 4rem) 1.5rem auto;
@@ -155,71 +309,6 @@
     .waypoint-nav a {
       color: #333;
       text-decoration: none;
-    }
-
-    .theatre-backdrop {
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.85);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      padding: clamp(1rem, 5vw, 3rem);
-      z-index: 40;
-    }
-
-    body.is-theatre {
-      overflow: hidden;
-    }
-
-    body.is-theatre .theatre-backdrop {
-      display: flex;
-    }
-
-    .theatre-shell {
-      position: relative;
-      width: min(960px, 90vw);
-      max-height: 90vh;
-      background: #fff;
-      border-radius: 0.75rem;
-      border: 2px solid #111;
-      padding: clamp(1.5rem, 3vw, 2.5rem);
-      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.35);
-      overflow: auto;
-    }
-
-    .theatre-content {
-      display: flex;
-      flex-direction: column;
-      gap: 1.5rem;
-    }
-
-    .theatre-content article {
-      padding: 0;
-      border: none;
-      border-radius: 0;
-      background: transparent;
-      gap: 1rem;
-    }
-
-    .theatre-close {
-      position: sticky;
-      top: 0;
-      margin-left: auto;
-      margin-bottom: 1rem;
-      background: #000;
-      color: #fff;
-      border: none;
-      border-radius: 999px;
-      padding: 0.35rem 0.85rem;
-      font-size: 0.9rem;
-      cursor: pointer;
-    }
-
-    .theatre-close:focus-visible {
-      outline: 2px solid #000;
-      outline-offset: 3px;
-      background: #222;
     }
 
     @media (min-width: 900px) {
@@ -261,6 +350,14 @@
         color: #333;
         text-align: right;
         padding: 0.125rem 0;
+        transition: color 0.3s ease;
+      }
+
+      .waypoint-nav a .waypoint-label {
+        display: inline-block;
+        transform-origin: 100% 50%;
+        transform: scale(1);
+        transition: transform 0.3s ease;
       }
 
       .waypoint-nav a::after {
@@ -270,7 +367,9 @@
         border-radius: 999px;
         border: 2px solid #333;
         background-color: #fff;
-        transition: background-color 0.25s ease, transform 0.25s ease, border-color 0.25s ease;
+        transform-origin: 50% 50%;
+        transform: scale(1);
+        transition: background-color 0.3s ease, transform 0.3s ease, border-color 0.3s ease;
         box-shadow: 0 0 0 2px #f7f7f7;
       }
 
@@ -278,14 +377,18 @@
         color: #000;
       }
 
+      .waypoint-nav a:is(:hover, :focus-visible) .waypoint-label {
+        transform: scale(1.12);
+      }
+
       .waypoint-nav a:is(:hover, :focus-visible)::after {
         border-color: #000;
+        transform: scale(1.12);
       }
 
       .waypoint-nav a.is-active::after {
         background-color: #000;
         border-color: #000;
-        transform: scale(1.25);
       }
 
       main {
@@ -299,108 +402,109 @@
       width: 100%;
     }
 
-    footer {
-      max-width: 960px;
-      margin: 0 auto 3rem;
-      padding: 0 1.5rem;
-      font-size: 0.9rem;
-      color: #555;
-    }
-
-    footer p {
-      margin: 0;
-    }
   </style>
 </head>
 <body>
   <header>
-    <h1>Michael McFarland</h1>
-    <p>Artist • Technologist • Storyteller</p>
+    <h1>Michael "Farley" McFarland</h1>
+    <p class="header-meta">
+      <span>Chicago, IL</span>
+      <a href="mailto:mcfarland.michael.p@gmail.com">mcfarland.michael.p@gmail.com</a>
+      <span>(847) 767-6230</span>
+    </p>
   </header>
 
   <nav class="waypoint-nav" aria-label="Section progress">
     <ol>
-      <li><a href="#about" tabindex="-1">About</a></li>
-      <li><a href="#production" tabindex="-1">Production</a></li>
-      <li><a href="#software" tabindex="-1">Software</a></li>
-      <li><a href="#hardware" tabindex="-1">Hardware</a></li>
-      <li><a href="#collaboration" tabindex="-1">Collaboration</a></li>
-      <li><a href="#contact" tabindex="-1">Contact</a></li>
+      <li><a href="#about" tabindex="-1"><span class="waypoint-label">About</span></a></li>
+      <li><a href="#experience" tabindex="-1"><span class="waypoint-label">Experience</span></a></li>
+      <li><a href="#creative" tabindex="-1"><span class="waypoint-label">Creative</span></a></li>
+      <li><a href="#software" tabindex="-1"><span class="waypoint-label">Software</span></a></li>
+      <li><a href="#hardware" tabindex="-1"><span class="waypoint-label">Hardware</span></a></li>
+      <li><a href="#contact" tabindex="-1"><span class="waypoint-label">Contact</span></a></li>
     </ol>
   </nav>
-
-  <div class="theatre-backdrop" aria-hidden="true">
-    <div class="theatre-shell" role="dialog" aria-modal="true" aria-label="Focused project view">
-      <button type="button" class="theatre-close">Close</button>
-      <div class="theatre-content"></div>
-    </div>
-  </div>
 
   <main>
     <section id="about">
       <h2>About</h2>
       <div class="examples">
-        <article class="feature">
+        <article>
           <h3>Overview</h3>
-          <p>Michael McFarland blends performance, engineering, and storytelling to help artists present their best work on stage, on record, and across digital media.</p>
-          <p>Strategic planning, deep listening, and a collaborative mindset anchor every engagement from discovery call through final delivery.</p>
+          <p>Interdisciplinary artist and technologist connecting live performance, studio craft, and narrative media.</p>
+          <p>Leads collaborative teams with clear communication, meticulous prep, and a focus on emotionally resonant results.</p>
+          <p>Equally at home in rehearsal rooms, editing suites, and production labs, translating ideas into experiences.</p>
         </article>
         <article>
-          <h3>Roles & Credits</h3>
-          <ul>
-            <li>Producer, vocalist, and multi-instrumentalist for independent releases and touring projects.</li>
-            <li>Supervising editor for podcast and documentary formats with national distribution.</li>
-            <li>Music director and show runner for regional theater and live performance residencies.</li>
-          </ul>
-        </article>
-        <article class="tall">
-          <h3>Education & Academic Highlights</h3>
-          <ul>
-            <li>Degree placeholder - Institution Name (Graduation Year, GPA or honors).</li>
-            <li>Specialized coursework covering audio engineering, composition, and media production.</li>
-            <li>Scholarships, juried showcases, and faculty commendations for performance and leadership.</li>
-          </ul>
-          <p>Update this section with the specific grades, awards, and recognitions you want visitors to see first.</p>
-        </article>
-        <article>
-          <h3>Certifications & Continuing Education</h3>
-          <ul>
-            <li>Certification placeholder - Program or issuing body.</li>
-            <li>Studio safety, rigging, or first aid credentials for production environments.</li>
-            <li>Ongoing workshops in songwriting, immersive audio, and leadership.</li>
-          </ul>
+          <h3>Education & Credentials</h3>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque id laoreet metus, a aliquam metus.</p>
+          <p>Integer fermentum, urna vel viverra gravida, sem odio auctor dolor, vitae bibendum nibh felis a massa.</p>
+          <p>Morbi vel leo sed lectus blandit vulputate. Sed euismod mauris at lectus laoreet, at dapibus nisl ultrices.</p>
         </article>
       </div>
     </section>
 
-    <section id="production">
-      <h2>Production</h2>
+    <section id="experience">
+      <h2>Experience</h2>
+      <div class="examples">
+        <article class="feature full-width tall">
+          <h3>Second Street Records</h3>
+          <p>Lead producer and co-founder steering the label's artist development, release campaigns, and creative direction.</p>
+          <p>Built collaborative production workflows, coordinated marketing rollouts, and guided partnerships from demo to release-ready masters.</p>
+        </article>
+        <article class="feature">
+          <h3>Private Math Tutor</h3>
+          <p>Guided secondary and college students through algebra, calculus, and statistics with tailored lessons aligned to their goals.</p>
+          <p>Combined diagnostic assessments, real-world examples, and iterative practice plans to build lasting confidence.</p>
+        </article>
+        <article>
+          <h3>Finance Professional</h3>
+          <p>Collaborated with cross-functional teams to evaluate budgets, forecast cash flow, and communicate risk scenarios with clarity.</p>
+          <p>Developed lightweight dashboards that kept stakeholders aligned on KPIs, compliance deadlines, and strategic pivots.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="creative">
+      <h2>Creative</h2>
       <div class="examples">
         <article class="feature">
-          <h3>Recorded Music</h3>
-          <p>Arranging, producing, and mixing releases that span cinematic rock, folk, and electro pop while safeguarding each artist voice.</p>
-          <audio controls preload="none">
-            <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
-            Your browser does not support the audio element.
-          </audio>
-          <p>Catalog includes full-length albums, EPs, and collaborative singles distributed across streaming platforms.</p>
+          <h3>Selected Music Releases</h3>
+          <div class="spotify-stack">
+            <iframe class="spotify-embed" data-testid="embed-iframe" src="https://open.spotify.com/embed/track/12FnOWzpxUtOj5hW1xhV6A?utm_source=generator&theme=0" frameborder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+            <iframe class="spotify-embed" data-testid="embed-iframe" src="https://open.spotify.com/embed/track/0voj7Ay0GVRrquyB9mBA2y?utm_source=generator" frameborder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+            <iframe class="spotify-embed" data-testid="embed-iframe" src="https://open.spotify.com/embed/track/3C1siYoB2IfUGznAWj4cKt?utm_source=generator" frameborder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+            <iframe class="spotify-embed" data-testid="embed-iframe" src="https://open.spotify.com/embed/track/2Z1zCAPOKStVHLefB9NL4c?utm_source=generator" frameborder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+          </div>
+          <p>Selected releases highlight cross-genre collaborations, detailed vocal production, and narratives shaped for repeat listening.</p>
+          <p>Behind the scenes logs chronicle session setups, mix revisions, and mastering notes for future reference.</p>
         </article>
         <article>
-          <h3>Live Shows & Events</h3>
-          <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=960&q=80" alt="Close-up of audio mixing equipment">
-          <p>Designing stage plots, advancing technical riders, and directing crews to deliver consistent experiences from intimate clubs to festival stages.</p>
-          <p><strong>Highlights:</strong> Residency builds, tour support, and hybrid streaming performances.</p>
+          <h3>Music/Audio Production</h3>
+          <p>Produces records that balance cinematic scope with intimate performances, shaping arrangements and mixes end-to-end.</p>
+          <p>Leads hybrid studio workflows, coordinates session players, and keeps deliverables aligned with rollout calendars.</p>
+          <p>Coaches artists through arrangement choices, vocal takes, and post-production to keep every project intentional.</p>
         </article>
-        <article class="tall">
-          <h3>Video & Visuals</h3>
-          <p>Storyboarding music videos, concert films, and promotional shorts that extend the sonic identity into a visual narrative.</p>
-          <p><strong>Workflow:</strong> Pre-production alignment, multi-cam capture, editorial polish, and color-managed delivery.</p>
-          <p>Archive includes lyric videos, documentary vignettes, and live session reels ready for press kits.</p>
+        <article class="feature">
+          <h3>Selected Video Material</h3>
+          <div class="video-embed" data-video-id="Y5ax2kVa5m8" data-thumbnail="assets/vic swts senegal.png" data-title="Live show highlight reel" data-label="Live Highlight">
+            <noscript>
+              <iframe src="https://www.youtube.com/embed/Y5ax2kVa5m8" title="Live show highlight reel" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+            </noscript>
+          </div>
+          <div class="video-embed" data-video-id="hRLA_FzqGYs" data-thumbnail="assets/nico ttgwh steppenwolf.png" data-title="Behind the scenes capture" data-label="Behind the Scenes">
+            <noscript>
+              <iframe src="https://www.youtube.com/embed/hRLA_FzqGYs" title="Behind the scenes capture" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+            </noscript>
+          </div>
+          <p>Live captures highlight collaborative direction across theatre residencies, tour stops, and hybrid streaming builds.</p>
+          <p>Detailed call sheets and pre-production decks align lighting, audio, and narrative beats before cameras roll.</p>
         </article>
         <article>
-          <h3>Show Support Services</h3>
-          <p>Backline coordination, playback integration, and stage management keep artists focused on performance.</p>
-          <p><em>Toolkit:</em> Tour prep documents, vendor coordination, and redundant systems for critical moments.</p>
+          <h3>Media Industry</h3>
+          <p>Storyboards music videos, concert films, and promotional shorts that extend sound into visual storytelling.</p>
+          <p><strong>Workflow:</strong> Align creatives in pre-production, capture multi-cam performances, and deliver color-managed edits for broadcast and social releases.</p>
+          <p>Archives include documentaries, lyric videos, and live session reels ready for press kits and distributor briefs.</p>
         </article>
       </div>
     </section>
@@ -409,30 +513,30 @@
       <h2>Software</h2>
       <div class="examples">
         <article class="feature">
-          <h3>DSP & Plugin Design</h3>
-          <p>Building custom signal chains, modulation tools, and utility plugins tailored to artist workflows.</p>
+          <h3>Untitled VoiceDAW App</h3>
+          <p>Rapid-prototyped a voice-driven workstation that captures performances, transcribes takes, and routes stems without touching a mouse.</p>
+          <p>Modular engine supports scene-based arrangements, live looping, and MIDI control surfaces for adaptive shows.</p>
+          <p>Focus on accessibility ensures artists with mobility considerations can direct complex sessions with simple phrases.</p>
+        </article>
+        <article>
+          <h3>Elemental VST Plugin</h3>
+          <p>Designing a multi-band dynamics suite that pairs spectral analysis with intuitive macro controls musicians trust on stage.</p>
           <figure>
-            <img src="https://via.placeholder.com/960x400" alt="Screenshot style placeholder representing a plugin interface">
-            <figcaption>Prototype interfaces emphasize clarity, real-time feedback, and musician-friendly controls.</figcaption>
+            <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=960&q=80" alt="Abstract user interface for audio software">
+            <figcaption>Interface explorations emphasize clarity, real-time feedback, and tactile automation lanes.</figcaption>
           </figure>
+          <p>Parameter locking, snapshot recall, and MIDI learn support slot seamlessly into modern DAW workflows.</p>
         </article>
         <article>
-          <h3>DAW Expertise</h3>
-          <p>Deep daily practice in Logic Pro, Pro Tools, Ableton Live, and Reaper, with session templates optimized for editing speed and recall.</p>
-          <ul>
-            <li>Custom macros, routing presets, and automation schemes.</li>
-            <li>Hybrid workflows bridging analog hardware and in-the-box processing.</li>
-          </ul>
-        </article>
-        <article class="tall">
-          <h3>App & Tool Development</h3>
-          <p>Internal utilities for session management, version control, and deliverable tracking.</p>
-          <p><strong>Stacks:</strong> Swift, JUCE, Max for Live, and lightweight web dashboards for client previews.</p>
-          <p>Exploring immersive audio toolchains, sample library management, and AI-assisted editorial aides.</p>
+          <h3>DAW/Tool Expertise</h3>
+          <p>Daily work in Logic Pro, Pro Tools, Ableton Live, and Reaper with custom templates tuned for editing speed and recall.</p>
+          <p>Builds macros, control surface mappings, and automation frameworks that translate across rooms and collaborators.</p>
+          <p>Hybrid routing bridges analog front ends with in-the-box precision without sacrificing spontaneity.</p>
         </article>
         <article>
-          <h3>Documentation & Support</h3>
-          <p>User guides, tutorial videos, and onboarding sessions help collaborators adopt new tools without friction.</p>
+          <h3>PLACEHOLDER</h3>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse potenti.</p>
+          <p>Curabitur gravida, justo sit amet pretium accumsan, justo orci rhoncus massa, in consequat urna nulla placerat erat.</p>
         </article>
       </div>
     </section>
@@ -449,51 +553,21 @@
           </figure>
         </article>
         <article>
-          <h3>Electronics & Microcontrollers</h3>
-          <p>Custom control surfaces, lighting cues, and automation rigs built with Arduino, Raspberry Pi, and MIDI-based hardware.</p>
-          <ul>
-            <li>Show automation for playback and lighting sync.</li>
-            <li>Utility devices for studio ergonomics and patching.</li>
-          </ul>
+          <h3>Microcontrollers</h3>
+          <p>Builds custom control surfaces, lighting cues, and automation rigs with Arduino, Raspberry Pi, and MIDI grid hardware.</p>
+          <p>Integrated show automation keeps playback, timecode, and lighting synchronized from rehearsal to performance.</p>
+          <p>Utility devices streamline studio ergonomics, power management, and patchbay routing under tight turnarounds.</p>
         </article>
         <article class="tall">
-          <h3>Instrument Craft & Modifications</h3>
-          <p>Pedalboard design, guitar wiring, and extended range instrument builds tailored to artist needs.</p>
-          <p><strong>Focus:</strong> Reliability, stage-ready switching, and unique sonic palettes.</p>
-          <p>Documented repairs and upgrades help future-proof the inventory.</p>
+          <h3>Instrument Craft</h3>
+          <p>Designs pedalboards, rewires guitars, and fabricates extended-range instruments to match each artist blueprint.</p>
+          <p><strong>Focus:</strong> Stage-ready reliability, silent switching, and tones that travel well between studio and tour.</p>
+          <p>Detailed documentation supports future repairs, rentals, and collaborative builds.</p>
         </article>
         <article>
-          <h3>Maintenance & Redundancy</h3>
-          <p>Regular calibration, backup power, and mirrored storage ensure critical systems stay online during demanding sessions.</p>
-        </article>
-      </div>
-    </section>
-
-    <section id="collaboration">
-      <h2>Collaboration</h2>
-      <div class="examples">
-        <article class="feature">
-          <h3>Community Partnerships</h3>
-          <p>Working with local arts organizations, makerspaces, and venues to produce inclusive programming and mentorship opportunities.</p>
-          <p>Project scopes range from benefit concerts to volunteer-led recording sessions highlighting regional talent.</p>
-        </article>
-        <article>
-          <h3>Charitable Initiatives</h3>
-          <p>Benefit compilations, fundraising performances, and pro bono production support for nonprofits addressing community needs.</p>
-          <p><strong>Impact:</strong> Donor engagement content, awareness campaigns, and storytelling assets.</p>
-        </article>
-        <article class="tall">
-          <h3>Workshops & Education</h3>
-          <p>Hands-on clinics covering songwriting, DIY electronics, and live sound fundamentals.</p>
-          <ul>
-            <li>Collaborations with schools and after-school programs.</li>
-            <li>Mentorship for emerging engineers and producers.</li>
-            <li>Curriculum guides and resources for facilitators.</li>
-          </ul>
-        </article>
-        <article>
-          <h3>Collaborator Stories</h3>
-          <p>Collecting testimonials and case studies that showcase shared wins with local creatives, venues, and community leaders.</p>
+          <h3>Analog Audio + Soldering</h3>
+          <p>Maintains outboard processing chains, patchbays, and summing rigs with calibrated gain staging and noise-floor audits.</p>
+          <p>Redundant power, mirrored storage, and emergency kits keep mission-critical sessions online when stakes are high.</p>
         </article>
       </div>
     </section>
@@ -503,128 +577,163 @@
       <div class="examples">
         <article class="feature">
           <h3>Reach Out</h3>
-          <p>Email <a href="mailto:michael@example.com">michael@example.com</a> with project details, timelines, and any reference material you would like reviewed.</p>
+          <p>Email <a href="mailto:mcfarland.michael.p@gmail.com">mcfarland.michael.p@gmail.com</a> with project details, timelines, and any reference material you would like reviewed.</p>
         </article>
         <article>
           <h3>Stay Connected</h3>
-          <p>Follow along on social platforms, subscribe to release updates, or connect through <a href="https://github.com/yourusername" target="_blank" rel="noreferrer">GitHub</a>.</p>
-        </article>
-        <article>
-          <h3>Next Steps</h3>
-          <ul>
-            <li>Share goals and deliverables.</li>
-            <li>Outline budget and schedule.</li>
-            <li>Confirm preferred communication channel.</li>
-          </ul>
+          <p>Follow along on social platforms, subscribe to release updates, or connect through <a href="https://github.com/michaelmcfarland" target="_blank" rel="noreferrer">GitHub</a>.</p>
         </article>
       </div>
     </section>
   </main>
-
-  <footer>
-    <p>Say hello at <a href="mailto:michael@example.com">michael@example.com</a> • Connect on <a href="https://github.com/yourusername">GitHub</a></p>
-  </footer>
 
   <script>
     (() => {
       const sections = Array.from(document.querySelectorAll('main > section'));
       const waypointLinks = Array.from(document.querySelectorAll('.waypoint-nav a'));
       const tiles = Array.from(document.querySelectorAll('.examples article'));
-      const theatreBackdrop = document.querySelector('.theatre-backdrop');
-      const theatreShell = document.querySelector('.theatre-shell');
-      const theatreContent = document.querySelector('.theatre-content');
-      const theatreClose = document.querySelector('.theatre-close');
-      const body = document.body;
+      const videoEmbeds = Array.from(document.querySelectorAll('.video-embed'));
 
-      if (!sections.length || !waypointLinks.length || !tiles.length || !theatreBackdrop || !theatreContent || !theatreClose) {
+      if (!sections.length || !waypointLinks.length) {
         return;
       }
 
-      let theatreState = { open: false, sourceTile: null };
-      let tabGuardActive = false;
-      let tabGuardTimer = null;
-
-      const engageTabGuard = () => {
-        tabGuardActive = true;
-        if (tabGuardTimer) {
-          clearTimeout(tabGuardTimer);
-        }
-        tabGuardTimer = setTimeout(() => {
-        tabGuardActive = false;
-        tabGuardTimer = null;
-      }, parseInt(getComputedStyle(document.documentElement).getPropertyValue('--tab-guard-delay'), 10) || 140);
+      const readWaypointOffset = () => {
+        const value = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--waypoint-offset'));
+        return Number.isFinite(value) ? value : 80;
       };
 
-      const pauseMedia = (root) => {
-        root.querySelectorAll('audio, video').forEach((media) => {
-          media.pause();
-          try {
-            media.currentTime = 0;
-          } catch (error) {
-            /* no-op */
+      const setActive = (id) => {
+        waypointLinks.forEach((link) => {
+          if (link.hash === `#${id}`) {
+            link.classList.add('is-active');
+          } else {
+            link.classList.remove('is-active');
           }
         });
       };
 
-      const closeTheatre = ({ restoreFocus = true } = {}) => {
-        if (!theatreState.open) {
+      const scrollToSection = (section) => {
+        if (!section) {
           return;
         }
 
-        pauseMedia(theatreContent);
-        body.classList.remove('is-theatre');
-        theatreBackdrop.setAttribute('aria-hidden', 'true');
-        theatreContent.innerHTML = '';
-        const origin = theatreState.sourceTile;
-        theatreState = { open: false, sourceTile: null };
-
-        if (restoreFocus && origin) {
-          requestAnimationFrame(() => origin.focus());
-        }
+        const offset = readWaypointOffset();
+        const targetTop = section === sections[0] ? 0 : Math.max(0, section.offsetTop - offset);
+        window.scrollTo({ top: targetTop, behavior: 'smooth' });
       };
 
-      const openTheatre = (tile) => {
-        if (!tile) {
-          return;
-        }
+      if ('IntersectionObserver' in window) {
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              setActive(entry.target.id);
+            }
+          });
+        }, { threshold: 0.45 });
 
-        pauseMedia(tile);
+        sections.forEach((section) => observer.observe(section));
+      } else {
+        const updateActiveByScroll = () => {
+          const midpoint = window.scrollY + window.innerHeight * 0.45;
+          let current = sections[0];
 
-        if (theatreState.open) {
-          closeTheatre({ restoreFocus: false });
-        }
-
-        theatreState = { open: true, sourceTile: tile };
-        body.classList.add('is-theatre');
-        theatreBackdrop.setAttribute('aria-hidden', 'false');
-        theatreContent.innerHTML = '';
-        const clone = tile.cloneNode(true);
-        clone.removeAttribute('tabindex');
-        clone.classList.add('is-theatre');
-        theatreContent.appendChild(clone);
-        if (theatreShell) {
-          theatreShell.scrollTop = 0;
-        }
-
-        const media = Array.from(theatreContent.querySelectorAll('audio, video'));
-        media.forEach((mediaEl) => {
-          mediaEl.currentTime = 0;
-          const attempt = mediaEl.play();
-          if (attempt && typeof attempt.catch === 'function') {
-            attempt.catch(() => {});
+          for (const section of sections) {
+            if (midpoint >= section.offsetTop) {
+              current = section;
+            }
           }
-        });
 
-        theatreClose.focus();
+          if (current) {
+            setActive(current.id);
+          }
+        };
+
+        window.addEventListener('scroll', updateActiveByScroll, { passive: true });
+        window.addEventListener('resize', updateActiveByScroll);
+        updateActiveByScroll();
+      }
+
+      const enhanceVideoEmbeds = () => {
+        videoEmbeds.forEach((container) => {
+          if (container.dataset.enhanced === 'true') {
+            return;
+          }
+
+          const videoId = container.dataset.videoId;
+          if (!videoId) {
+            return;
+          }
+
+          const title = container.dataset.title || 'Embedded video';
+          const thumbnailSource = (container.dataset.thumbnail || '').trim() || `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
+          const labelText = (container.dataset.label || '').trim();
+          const fallback = container.querySelector('noscript');
+
+          const overlay = document.createElement('button');
+          overlay.type = 'button';
+          overlay.className = 'video-embed__overlay';
+          overlay.setAttribute('aria-label', `Play ${title}`);
+
+          const media = document.createElement('span');
+          media.className = 'video-embed__media';
+          const img = document.createElement('img');
+          img.src = thumbnailSource;
+          img.alt = '';
+          img.loading = 'lazy';
+          img.decoding = 'async';
+          media.appendChild(img);
+          overlay.appendChild(media);
+
+          if (labelText) {
+            const label = document.createElement('span');
+            label.className = 'video-embed__label';
+            label.textContent = labelText;
+            overlay.appendChild(label);
+          }
+
+          const playIcon = document.createElement('span');
+          playIcon.className = 'video-embed__play';
+          playIcon.setAttribute('aria-hidden', 'true');
+          overlay.appendChild(playIcon);
+
+          const loadPlayer = () => {
+            const iframe = document.createElement('iframe');
+            iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
+            iframe.title = title;
+            iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+            iframe.allowFullscreen = true;
+            iframe.loading = 'lazy';
+            iframe.referrerPolicy = 'strict-origin-when-cross-origin';
+            container.innerHTML = '';
+            container.appendChild(iframe);
+          };
+
+          overlay.addEventListener('click', loadPlayer);
+
+          container.innerHTML = '';
+          container.appendChild(overlay);
+          if (fallback) {
+            container.appendChild(fallback);
+          }
+          container.dataset.enhanced = 'true';
+        });
       };
 
-      tiles.forEach((tile) => {
-        tile.tabIndex = 0;
-        tile.addEventListener('dblclick', () => openTheatre(tile));
-        tile.addEventListener('keydown', (event) => {
-          if ((event.key === 'Enter' || event.key === 'Return') && !event.shiftKey && !event.ctrlKey && !event.metaKey && !event.altKey) {
-            event.preventDefault();
-            openTheatre(tile);
+      waypointLinks.forEach((link) => {
+        link.addEventListener('click', (event) => {
+          const targetId = link.hash.slice(1);
+          const targetSection = sections.find((section) => section.id === targetId);
+
+          if (!targetSection) {
+            return;
+          }
+
+          event.preventDefault();
+          scrollToSection(targetSection);
+
+          if (history.replaceState) {
+            history.replaceState(null, '', `#${targetSection.id}`);
           }
         });
       });
@@ -639,144 +748,27 @@
         tile.scrollIntoView({ behavior: 'smooth', block: 'center' });
       };
 
-      theatreClose.addEventListener('click', () => closeTheatre());
-      theatreBackdrop.addEventListener('click', (event) => {
-        if (event.target === theatreBackdrop) {
-          closeTheatre();
-        }
-      });
+      tiles.forEach((tile, index) => {
+        tile.tabIndex = 0;
 
-      const clearHash = () => {
-        if (history.replaceState && window.location.hash) {
-          history.replaceState(null, '', window.location.pathname + window.location.search);
-        }
-      };
-
-      const setActive = (id) => {
-        waypointLinks.forEach((link) => {
-          if (link.hash === `#${id}`) {
-            link.classList.add('is-active');
-          } else {
-            link.classList.remove('is-active');
-          }
-        });
-        clearHash();
-      };
-
-      const activateByScrollPosition = () => {
-        const midpoint = window.scrollY + window.innerHeight * 0.45;
-        let current = sections[0];
-
-        for (const section of sections) {
-          if (midpoint >= section.offsetTop) {
-            current = section;
-          }
-        }
-
-        if (current) {
-          setActive(current.id);
-        }
-      };
-
-      if ('IntersectionObserver' in window) {
-        const observer = new IntersectionObserver((entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              setActive(entry.target.id);
-            }
-          });
-        }, {
-          root: null,
-          threshold: 0.45
-        });
-
-        sections.forEach((section) => observer.observe(section));
-      } else {
-        window.addEventListener('scroll', activateByScrollPosition, { passive: true });
-        window.addEventListener('resize', activateByScrollPosition);
-        activateByScrollPosition();
-      }
-
-      waypointLinks.forEach((link) => {
-        link.addEventListener('click', (event) => {
-          event.preventDefault();
-          const targetId = link.hash.slice(1);
-          const targetSection = document.getElementById(targetId);
-
-          if (targetId === 'about') {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-          } else if (targetSection) {
-            const rawOffset = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--waypoint-offset'));
-            const offset = Number.isFinite(rawOffset) ? rawOffset : 80;
-            const targetPosition = targetSection.getBoundingClientRect().top + window.scrollY - offset;
-            window.scrollTo({ top: targetPosition, behavior: 'smooth' });
-          }
-
-          setActive(targetId);
-        });
-      });
-
-      document.addEventListener('keydown', (event) => {
-        const key = event.key;
-
-        if (key === 'Escape' && theatreState.open) {
-          event.preventDefault();
-          closeTheatre();
-          return;
-        }
-
-        if ((key === ' ' || key === 'Spacebar') && !event.ctrlKey && !event.metaKey && !event.altKey) {
-          if (theatreState.open) {
-            event.preventDefault();
-            closeTheatre();
+        tile.addEventListener('keydown', (event) => {
+          if (event.key !== 'Tab' || event.ctrlKey || event.metaKey || event.altKey) {
             return;
           }
 
-          const activeTile = document.activeElement ? document.activeElement.closest('.examples article') : null;
-          if (activeTile) {
-            event.preventDefault();
-            openTheatre(activeTile);
-          }
-          return;
-        }
-
-        if (key !== 'Tab' || event.ctrlKey || event.metaKey || event.altKey) {
-          return;
-        }
-
-        if (theatreState.open) {
-          return;
-        }
-
-        const activeTile = document.activeElement ? document.activeElement.closest('.examples article') : null;
-
-        if (!activeTile) {
-          return;
-        }
-
-        const currentIndex = tiles.indexOf(activeTile);
-
-        if (currentIndex === -1) {
-          return;
-        }
-
-        if (tabGuardActive) {
           event.preventDefault();
-          return;
-        }
-
-        event.preventDefault();
-        engageTabGuard();
-        const direction = event.shiftKey ? -1 : 1;
-        const nextIndex = (currentIndex + direction + tiles.length) % tiles.length;
-        requestAnimationFrame(() => focusTile(nextIndex));
+          const direction = event.shiftKey ? -1 : 1;
+          const nextIndex = (index + direction + tiles.length) % tiles.length;
+          focusTile(nextIndex);
+        });
       });
+
+      enhanceVideoEmbeds();
+
       const initialTarget = window.location.hash.slice(1);
-      if (initialTarget) {
-        const match = sections.find((section) => section.id === initialTarget);
-        setActive(match ? match.id : sections[0].id);
-      } else {
-        setActive(sections[0].id);
+      const initialSection = sections.find((section) => section.id === initialTarget) || sections[0];
+      if (initialSection) {
+        setActive(initialSection.id);
       }
     })();
   </script>
