@@ -38,6 +38,50 @@
       gap: var(--header-stack-gap, 0.75rem);
     }
 
+    header .profile-image {
+      width: min(260px, 65vw);
+      aspect-ratio: 1 / 1;
+    }
+
+    .ssr-highlight .ssr-visuals {
+      position: relative;
+      display: flex;
+      justify-content: flex-end;
+      align-items: flex-end;
+      margin-top: 1.25rem;
+      margin-left: auto;
+      width: min(380px, 60vw);
+    }
+
+    .ssr-highlight .ssr-visuals img {
+      display: block;
+      object-fit: contain;
+      aspect-ratio: 1 / 1;
+    }
+
+    .ssr-highlight .ssr-visuals .ssr-visuals__street {
+      width: min(231px, 44.1vw);
+      position: relative;
+      z-index: 2;
+      transform: translateX(17%);
+    }
+
+    .ssr-highlight .ssr-visuals .ssr-visuals__speaker {
+      width: min(205px, 38vw);
+      position: absolute;
+      right: min(50px, 10vw);
+      bottom: -12%;
+      z-index: 1;
+    }
+
+    .ssr-highlight .ssr-visuals .ssr-visuals__cone {
+      width: min(63px, 16.2vw);
+      position: absolute;
+      right: max(-10px, -2vw);
+      bottom: -1%;
+      z-index: 3;
+    }
+
     header h1 {
       margin: 0;
       font-size: clamp(2rem, 4vw, 3rem);
@@ -181,6 +225,87 @@
       margin: 0;
     }
 
+    .media-panel__cover {
+      position: relative;
+      width: 100%;
+      padding-bottom: 56.25%;
+      border-radius: 0.75rem;
+      overflow: hidden;
+      background: #000;
+    }
+
+    .media-panel__cover img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.35s ease;
+    }
+
+    .media-panel__cover::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.7);
+      opacity: 0;
+      transition: opacity 0.25s ease;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .media-panel__cover::after {
+      content: attr(data-name);
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      padding: clamp(0.4rem, 2vw, 1rem);
+      font-size: clamp(2.2rem, 5vw, 3.5rem);
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-align: center;
+      line-height: 1.05;
+      color: transparent;
+      background-image: var(--cover-image);
+      background-size: cover;
+      background-position: var(--cover-position, center);
+      background-repeat: no-repeat;
+      -webkit-background-clip: text;
+      background-clip: text;
+      white-space: pre-line;
+      -webkit-text-stroke: 1.3px rgba(255, 255, 255, 0.9);
+      text-shadow:
+        0 0 10px rgba(0, 0, 0, 0.5),
+        0 0 22px rgba(0, 0, 0, 0.6);
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.25s ease;
+      z-index: 2;
+    }
+
+    .media-panel:hover .media-panel__cover::before,
+    .media-panel:hover .media-panel__cover::after {
+      opacity: 1;
+    }
+
+    .media-panel__action {
+      transition: opacity 0.2s ease, transform 0.2s ease;
+    }
+
+    .media-panel:hover .media-panel__action {
+      opacity: 0;
+      transform: translateY(-4px);
+    }
+
+    @supports not (-webkit-text-stroke: 1px rgba(255, 255, 255, 1)) {
+      .media-panel__cover::after {
+        color: rgba(255, 255, 255, 0.92);
+        background-image: none;
+      }
+    }
+
     img,
     video {
       display: block;
@@ -309,6 +434,78 @@
       margin: 0;
     }
 
+    .spotify-tile {
+      overflow: visible;
+      border-radius: 0.75rem;
+      display: flex;
+      flex-direction: column;
+      border: 0;
+      background: #121212;
+      position: relative;
+    }
+
+    .spotify-tile iframe {
+      border-radius: 0.75rem 0.75rem 0 0;
+      flex: 1 1 auto;
+      min-height: 152px;
+    }
+
+    .spotify-cta {
+      position: relative;
+      background: var(--cta-color, #1db954);
+      border-radius: 0 0 0.75rem 0.75rem;
+      overflow: visible;
+      margin-top: -1px;
+    }
+
+    .spotify-cta::before,
+    .spotify-cta::after {
+      content: '';
+      position: absolute;
+      top: -55%;
+      width: 2.25rem;
+      height: 55%;
+      background: var(--cta-peak-color, var(--cta-color, #1db954));
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .spotify-cta::before {
+      left: 0;
+      clip-path: polygon(0 0, 100% 100%, 0 100%);
+    }
+
+    .spotify-cta::after {
+      right: 0;
+      clip-path: polygon(100% 0, 100% 100%, 0 100%);
+    }
+
+    .spotify-info-cta {
+      width: 100%;
+      border: 0;
+      margin: 0;
+      padding: 0.75rem 1rem;
+      font-size: 0.95rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      background: transparent;
+      color: #fff;
+      cursor: pointer;
+      display: block;
+      text-align: center;
+      border-radius: 0 0 0.75rem 0.75rem;
+      transition: background 0.2s ease, color 0.2s ease;
+      text-decoration: none;
+      border-top: 0;
+      overflow: visible;
+      z-index: 1;
+    }
+
+    .spotify-cta:is(:hover, :focus-within) {
+      background: color-mix(in srgb, var(--cta-color, #1db954) 85%, #000);
+    }
+
     .media-panel {
       padding: 0;
       background: none;
@@ -324,8 +521,12 @@
     }
 
     .media-panel:focus-visible {
-      outline: 3px solid #000;
-      outline-offset: 4px;
+      outline: none;
+    }
+
+    .media-panel:hover:not([data-theatre-type]) {
+      outline: 2px solid #000;
+      outline-offset: 2px;
     }
 
     .media-panel__action {
@@ -572,12 +773,27 @@
       box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
     }
 
-    .theatre__media iframe,
+    .theatre__media-slot {
+      width: 100%;
+      transition: opacity 0.25s ease;
+    }
+
+    .theatre__media-slot.is-swapping {
+      opacity: 0;
+    }
+
     .theatre__media img {
       width: 100%;
       height: 100%;
       border: 0;
       object-fit: cover;
+    }
+
+    .theatre__media iframe {
+      width: 100%;
+      height: auto;
+      border: 0;
+      aspect-ratio: 16 / 9;
     }
 
     .theatre--image .theatre__media img {
@@ -586,11 +802,64 @@
       background: #050505;
     }
 
+    .theatre__nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: clamp(2.5rem, 4vw, 2.9rem);
+      height: clamp(2.5rem, 4vw, 2.9rem);
+      border-radius: 999px;
+      border: 0;
+      display: grid;
+      place-items: center;
+      background: rgba(0, 0, 0, 0.55);
+      color: #fff;
+      cursor: pointer;
+      transition: background 0.2s ease, transform 0.2s ease;
+      z-index: 2;
+    }
+
+    .theatre__nav span {
+      font-size: 1.5rem;
+      line-height: 1;
+      pointer-events: none;
+    }
+
+    .theatre__nav--prev {
+      left: clamp(0.5rem, 2vw, 1rem);
+    }
+
+    .theatre__nav--next {
+      right: clamp(0.5rem, 2vw, 1rem);
+    }
+
+    .theatre__nav:is(:hover, :focus-visible) {
+      background: rgba(255, 255, 255, 0.2);
+      transform: translateY(-50%) scale(1.05);
+      outline: 0;
+    }
+
+    .theatre__nav[hidden] {
+      display: none;
+    }
+
     .theatre__details {
       display: flex;
       flex-direction: column;
       gap: 1rem;
       min-width: 0;
+      transition: opacity 0.25s ease;
+    }
+
+    .theatre__details.is-swapping {
+      opacity: 0;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .theatre__media-slot,
+      .theatre__details {
+        transition: none;
+      }
     }
 
     .theatre__title {
@@ -655,6 +924,7 @@
       <a href="mailto:mcfarland.michael.p@gmail.com">mcfarland.michael.p@gmail.com</a>
       <span>(847) 767-6230</span>
     </p>
+    <img src="assets/SSR_BOYoutline.png" alt="Michael &quot;Farley&quot; McFarland outline illustration" class="profile-image" loading="lazy">
   </header>
 
   <nav class="waypoint-nav" aria-label="Section progress">
@@ -690,10 +960,15 @@
     <section id="experience">
       <h2>Experience</h2>
       <div class="examples">
-        <article class="feature full-width tall">
+        <article class="feature full-width tall ssr-highlight">
           <h3>Second Street Records</h3>
           <p>Lead producer and co-founder steering the label's artist development, release campaigns, and creative direction.</p>
           <p>Built collaborative production workflows, coordinated marketing rollouts, and guided partnerships from demo to release-ready masters.</p>
+          <div class="ssr-visuals">
+            <img src="assets/SSR_StreetSignDude.png" alt="Street sign character illustration" class="ssr-visuals__street" loading="lazy">
+            <img src="assets/SSR_LoudSpeaker1.png" alt="Loudspeaker illustration" class="ssr-visuals__speaker" loading="lazy">
+            <img src="assets/SSR_TrafficCone.png" alt="Traffic cone illustration" class="ssr-visuals__cone" loading="lazy">
+          </div>
         </article>
         <article class="feature">
           <h3>Private Math Tutor</h3>
@@ -712,56 +987,68 @@
       <h2>Creative</h2>
       <div class="examples">
         <article class="feature">
-          <h3>Selected Music Releases</h3>
+          <h3>Select Music Releases</h3>
           <p>Selected releases highlight cross-genre collaborations, detailed vocal production, and narratives shaped for repeat listening.</p>
           <p>Behind the scenes logs chronicle session setups, mix revisions, and mastering notes for future reference.</p>
           <p>Produces records that balance cinematic scope with intimate performances, shaping arrangements and mixes end-to-end.</p>
           <p>Leads hybrid studio workflows, coordinates session players, and keeps deliverables aligned with rollout calendars.</p>
           <p>Coaches artists through arrangement choices, vocal takes, and post-production to keep every project intentional.</p>
         </article>
-        <article class="media-panel" role="button" aria-haspopup="dialog" tabindex="0" aria-label="Open Spotify Highlight — Track One in theatre view" data-theatre-type="spotify" data-theatre-image="https://placehold.co/1200x675?text=Spotify+Preview+1" data-theatre-title="Spotify Highlight — Track One" data-theatre-description="Listen in a focused theatre view to explore arrangement notes and session context." data-theatre-link="https://open.spotify.com/track/12FnOWzpxUtOj5hW1xhV6A">
-          <button class="media-panel__action media-panel__action--spotify" type="button" aria-label="Open theatre with more info">Info</button>
+        <article class="media-panel" aria-label="Open Spotify Highlight — Track One in theatre view" data-theatre-type="spotify" data-theatre-image="https://placehold.co/1200x675?text=Spotify+Preview+1" data-theatre-title="Spotify Highlight — Track One" data-theatre-description="Listen in a focused theatre view to explore arrangement notes and session context." data-theatre-link="https://open.spotify.com/track/12FnOWzpxUtOj5hW1xhV6A">
           <h3 class="sr-only">Spotify Highlight — Track One</h3>
-          <iframe class="spotify-embed" data-testid="embed-iframe" src="https://open.spotify.com/embed/track/12FnOWzpxUtOj5hW1xhV6A?utm_source=generator&theme=0" frameborder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+          <div class="spotify-tile" style="--cta-color: #1f1f1f;">
+            <iframe class="spotify-embed" data-testid="embed-iframe" src="https://open.spotify.com/embed/track/12FnOWzpxUtOj5hW1xhV6A?utm_source=generator&theme=0" frameborder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+            <div class="spotify-cta">
+              <button class="spotify-info-cta" type="button" aria-label="Open theatre with more info">Click for Info</button>
+            </div>
+          </div>
         </article>
-        <article class="media-panel" role="button" aria-haspopup="dialog" tabindex="0" aria-label="Open Spotify Highlight — Track Two in theatre view" data-theatre-type="spotify" data-theatre-image="https://placehold.co/1200x675?text=Spotify+Preview+2" data-theatre-title="Spotify Highlight — Track Two" data-theatre-description="Switch to theatre mode for production details and session anecdotes." data-theatre-link="https://open.spotify.com/track/0voj7Ay0GVRrquyB9mBA2y">
-          <button class="media-panel__action media-panel__action--spotify" type="button" aria-label="Open theatre with more info">Info</button>
+        <article class="media-panel" aria-label="Open Spotify Highlight — Track Two in theatre view" data-theatre-type="spotify" data-theatre-image="https://placehold.co/1200x675?text=Spotify+Preview+2" data-theatre-title="Spotify Highlight — Track Two" data-theatre-description="Switch to theatre mode for production details and session anecdotes." data-theatre-link="https://open.spotify.com/track/0voj7Ay0GVRrquyB9mBA2y">
           <h3 class="sr-only">Spotify Highlight — Track Two</h3>
-          <iframe class="spotify-embed" data-testid="embed-iframe" src="https://open.spotify.com/embed/track/0voj7Ay0GVRrquyB9mBA2y?utm_source=generator" frameborder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+          <div class="spotify-tile" style="--cta-color: #1d5589;">
+            <iframe class="spotify-embed" data-testid="embed-iframe" src="https://open.spotify.com/embed/track/0voj7Ay0GVRrquyB9mBA2y?utm_source=generator" frameborder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+            <div class="spotify-cta">
+              <button class="spotify-info-cta" type="button" aria-label="Open theatre with more info">Click for Info</button>
+            </div>
+          </div>
         </article>
-        <article class="media-panel" role="button" aria-haspopup="dialog" tabindex="0" aria-label="Open Spotify Highlight — Track Three in theatre view" data-theatre-type="spotify" data-theatre-image="https://placehold.co/1200x675?text=Spotify+Preview+3" data-theatre-title="Spotify Highlight — Track Three" data-theatre-description="Open the theatre overlay for notes on mix decisions and mastering references." data-theatre-link="https://open.spotify.com/track/3C1siYoB2IfUGznAWj4cKt">
-          <button class="media-panel__action media-panel__action--spotify" type="button" aria-label="Open theatre with more info">Info</button>
+        <article class="media-panel" aria-label="Open Spotify Highlight — Track Three in theatre view" data-theatre-type="spotify" data-theatre-image="https://placehold.co/1200x675?text=Spotify+Preview+3" data-theatre-title="Spotify Highlight — Track Three" data-theatre-description="Open the theatre overlay for notes on mix decisions and mastering references." data-theatre-link="https://open.spotify.com/track/3C1siYoB2IfUGznAWj4cKt">
           <h3 class="sr-only">Spotify Highlight — Track Three</h3>
-          <iframe class="spotify-embed" data-testid="embed-iframe" src="https://open.spotify.com/embed/track/3C1siYoB2IfUGznAWj4cKt?utm_source=generator" frameborder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+          <div class="spotify-tile" style="--cta-color: #8d3500;">
+            <iframe class="spotify-embed" data-testid="embed-iframe" src="https://open.spotify.com/embed/track/3C1siYoB2IfUGznAWj4cKt?utm_source=generator" frameborder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+            <div class="spotify-cta">
+              <button class="spotify-info-cta" type="button" aria-label="Open theatre with more info">Click for Info</button>
+            </div>
+          </div>
         </article>
-        <article class="media-panel" role="button" aria-haspopup="dialog" tabindex="0" aria-label="Open Spotify Highlight — Track Four in theatre view" data-theatre-type="spotify" data-theatre-image="https://placehold.co/1200x675?text=Spotify+Preview+4" data-theatre-title="Spotify Highlight — Track Four" data-theatre-description="Dive deeper into arrangement callouts, references, and release rollout checkpoints." data-theatre-link="https://open.spotify.com/track/2Z1zCAPOKStVHLefB9NL4c">
-          <button class="media-panel__action media-panel__action--spotify" type="button" aria-label="Open theatre with more info">Info</button>
+        <article class="media-panel" aria-label="Open Spotify Highlight — Track Four in theatre view" data-theatre-type="spotify" data-theatre-image="https://placehold.co/1200x675?text=Spotify+Preview+4" data-theatre-title="Spotify Highlight — Track Four" data-theatre-description="Dive deeper into arrangement callouts, references, and release rollout checkpoints." data-theatre-link="https://open.spotify.com/track/2Z1zCAPOKStVHLefB9NL4c">
           <h3 class="sr-only">Spotify Highlight — Track Four</h3>
-          <iframe class="spotify-embed" data-testid="embed-iframe" src="https://open.spotify.com/embed/track/2Z1zCAPOKStVHLefB9NL4c?utm_source=generator" frameborder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+          <div class="spotify-tile" style="--cta-color: #54544d;">
+            <iframe class="spotify-embed" data-testid="embed-iframe" src="https://open.spotify.com/embed/track/2Z1zCAPOKStVHLefB9NL4c?utm_source=generator" frameborder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+            <div class="spotify-cta">
+              <button class="spotify-info-cta" type="button" aria-label="Open theatre with more info">Click for Info</button>
+            </div>
+          </div>
         </article>
         <article class="feature">
-          <h3>Selected Creative Partnerships</h3>
+          <h3>Select Creative Partnerships</h3>
           <p>Live captures highlight collaborative direction across theatre residencies, tour stops, and hybrid streaming builds.</p>
           <p>Detailed call sheets and pre-production decks align lighting, audio, and narrative beats before cameras roll.</p>
         </article>
         <div class="media-pair">
-          <article class="media-panel" role="button" aria-haspopup="dialog" tabindex="0" aria-label="Open Vic Mensa partnership in theatre view" data-theatre-type="youtube" data-video-id="Y5ax2kVa5m8" data-theatre-image="https://placehold.co/1200x675?text=Vic+Mensa" data-theatre-title="Vic Mensa Partnership" data-theatre-description="A performance partnership spotlight featuring Vic Mensa and live production notes.">
-            <button class="media-panel__action media-panel__action--video" type="button" aria-label="Open theatre with more info">Info</button>
+          <article class="media-panel" aria-label="Open Vic Mensa partnership in theatre view" data-theatre-type="youtube" data-video-id="Y5ax2kVa5m8" data-theatre-image="https://placehold.co/1200x675?text=Vic+Mensa" data-theatre-title="Vic Mensa Partnership" data-theatre-description="A performance partnership spotlight featuring Vic Mensa and live production notes." data-theatre-slideshow="vic">
+            <button class="media-panel__action media-panel__action--video" type="button" aria-label="Open theatre with more info">Click for Info</button>
             <h3 class="sr-only">Vic Mensa Partnership</h3>
-            <div class="video-embed" data-video-id="Y5ax2kVa5m8" data-thumbnail="assets/vic swts senegal.png" data-title="Vic Mensa partnership reel" data-label="Vic Mensa">
-              <noscript>
-                <iframe src="https://www.youtube.com/embed/Y5ax2kVa5m8" title="Vic Mensa partnership reel" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
-              </noscript>
-            </div>
+            <figure class="media-panel__cover" data-name="Vic&#10;Mensa" style="--cover-image: url('assets/vic cover wide.png');">
+              <img src="assets/vic cover wide.png" alt="Vic Mensa cover collage">
+            </figure>
           </article>
-          <article class="media-panel" role="button" aria-haspopup="dialog" tabindex="0" aria-label="Open Nico Segal partnership in theatre view" data-theatre-type="youtube" data-video-id="hRLA_FzqGYs" data-theatre-image="https://placehold.co/1200x675?text=Nico+Segal" data-theatre-title="Nico Segal Partnership" data-theatre-description="Behind-the-scenes collaboration with Nico Segal captured for creative partners.">
-            <button class="media-panel__action media-panel__action--video" type="button" aria-label="Open theatre with more info">Info</button>
+          <article class="media-panel" aria-label="Open Nico Segal partnership in theatre view" data-theatre-type="youtube" data-video-id="hRLA_FzqGYs" data-theatre-image="https://placehold.co/1200x675?text=Nico+Segal" data-theatre-title="Nico Segal Partnership" data-theatre-description="Behind-the-scenes collaboration with Nico Segal captured for creative partners." data-theatre-slideshow="nico">
+            <button class="media-panel__action media-panel__action--video" type="button" aria-label="Open theatre with more info">Click for Info</button>
             <h3 class="sr-only">Nico Segal Partnership</h3>
-            <div class="video-embed" data-video-id="hRLA_FzqGYs" data-thumbnail="assets/nico ttgwh steppenwolf.png" data-title="Nico Segal partnership capture" data-label="Nico Segal">
-              <noscript>
-                <iframe src="https://www.youtube.com/embed/hRLA_FzqGYs" title="Nico Segal partnership capture" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
-              </noscript>
-            </div>
+            <figure class="media-panel__cover" data-name="Nico&#10;Segal" style="--cover-image: url('assets/nico cover wide.png'); --cover-position: center 85%;">
+              <img src="assets/nico cover wide.png" alt="Nico Segal cover collage" style="object-position: center 85%;">
+            </figure>
           </article>
         </div>
         <article>
@@ -782,7 +1069,7 @@
           <p>Modular engine supports scene-based arrangements, live looping, and MIDI control surfaces for adaptive shows.</p>
           <p>Focus on accessibility ensures artists with mobility considerations can direct complex sessions with simple phrases.</p>
         </article>
-        <article role="button" aria-haspopup="dialog" tabindex="0" aria-label="Open Elemental VST Plugin Interface in theatre view" data-theatre-type="image" data-theatre-src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1920&q=90" data-theatre-title="Elemental VST Plugin Interface" data-theatre-description="Interface concept art for the Elemental dynamics suite, highlighting automation lanes and signal flow overlays.">
+        <article aria-label="Open Elemental VST Plugin Interface in theatre view" data-theatre-type="image" data-theatre-src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1920&q=90" data-theatre-title="Elemental VST Plugin Interface" data-theatre-description="Interface concept art for the Elemental dynamics suite, highlighting automation lanes and signal flow overlays.">
           <h3>Elemental VST Plugin</h3>
           <p>Designing a multi-band dynamics suite that pairs spectral analysis with intuitive macro controls musicians trust on stage.</p>
           <figure>
@@ -808,7 +1095,7 @@
     <section id="hardware">
       <h2>Hardware</h2>
       <div class="examples">
-        <article class="feature" role="button" aria-haspopup="dialog" tabindex="0" aria-label="Open Studio Build Control Room in theatre view" data-theatre-type="image" data-theatre-src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1920&q=90" data-theatre-title="Studio Build Control Room" data-theatre-description="Dive into the control room reference build, including routing diagrams and acoustical treatment callouts.">
+        <article class="feature" aria-label="Open Studio Build Control Room in theatre view" data-theatre-type="image" data-theatre-src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1920&q=90" data-theatre-title="Studio Build Control Room" data-theatre-description="Dive into the control room reference build, including routing diagrams and acoustical treatment callouts.">
           <h3>Studio Build</h3>
           <p>Purpose-built control room with tuned acoustics, modular furniture, and flexible routing to support rapid context switching.</p>
           <figure>
@@ -855,7 +1142,6 @@
     (() => {
       const sections = Array.from(document.querySelectorAll('main > section'));
       const waypointLinks = Array.from(document.querySelectorAll('.waypoint-nav a'));
-      const tiles = Array.from(document.querySelectorAll('.examples article'));
       const videoEmbeds = Array.from(document.querySelectorAll('.video-embed'));
       const theatreTriggers = Array.from(document.querySelectorAll('[data-theatre-type]'));
 
@@ -868,14 +1154,24 @@
         return Number.isFinite(value) ? value : 80;
       };
 
-      const setActive = (id) => {
+      const waypointTarget = (link) => link.dataset.section || (link.hash || '').replace('#', '');
+
+      const updateActiveLink = (id) => {
         waypointLinks.forEach((link) => {
-          if (link.hash === `#${id}`) {
+          const target = waypointTarget(link);
+          if (target === id) {
             link.classList.add('is-active');
+            link.setAttribute('aria-current', 'true');
           } else {
             link.classList.remove('is-active');
+            link.removeAttribute('aria-current');
           }
         });
+      };
+
+      const clampScrollTop = (value) => {
+        const max = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
+        return Math.min(Math.max(0, value), max);
       };
 
       const scrollToSection = (section) => {
@@ -884,105 +1180,127 @@
         }
 
         const offset = readWaypointOffset();
-        const targetTop = section === sections[0] ? 0 : Math.max(0, section.offsetTop - offset);
-        window.scrollTo({ top: targetTop, behavior: 'smooth' });
+        let targetTop = section === sections[0] ? 0 : section.offsetTop - offset;
+        window.scrollTo({ top: clampScrollTop(targetTop), behavior: 'smooth' });
       };
 
-      if ('IntersectionObserver' in window) {
-        const observer = new IntersectionObserver((entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              setActive(entry.target.id);
-            }
-          });
-        }, { threshold: 0.45 });
+      waypointLinks.forEach((link) => {
+        if (!link.dataset.section && link.hash) {
+          link.dataset.section = link.hash.replace('#', '');
+        }
+      });
 
-        sections.forEach((section) => observer.observe(section));
-      } else {
-        const updateActiveByScroll = () => {
-          const midpoint = window.scrollY + window.innerHeight * 0.45;
-          let current = sections[0];
+      const scrollActiveThreshold = () => window.innerHeight * 0.35;
 
-          for (const section of sections) {
-            if (midpoint >= section.offsetTop) {
-              current = section;
-            }
+      const findActiveSection = () => {
+        const threshold = scrollActiveThreshold();
+        let active = sections[0];
+        const nearBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4;
+
+        for (const section of sections) {
+          const rect = section.getBoundingClientRect();
+          const midline = threshold;
+
+          if (rect.top <= midline && rect.bottom >= midline) {
+            active = section;
+            break;
           }
 
-          if (current) {
-            setActive(current.id);
+          if (rect.top < midline) {
+            active = section;
           }
-        };
+        }
 
-        window.addEventListener('scroll', updateActiveByScroll, { passive: true });
-        window.addEventListener('resize', updateActiveByScroll);
-        updateActiveByScroll();
-      }
+        if (nearBottom) {
+          active = sections[sections.length - 1];
+        }
+
+        return active;
+      };
+
+      const updateActiveByScroll = () => {
+        const current = findActiveSection();
+        if (current) {
+          updateActiveLink(current.id);
+        }
+      };
+
+      window.addEventListener('scroll', updateActiveByScroll, { passive: true });
+      window.addEventListener('resize', updateActiveByScroll);
 
       const enhanceVideoEmbeds = () => {
         videoEmbeds.forEach((container) => {
-          if (container.dataset.enhanced === 'true') {
-            return;
-          }
-
-          const videoId = container.dataset.videoId;
-          if (!videoId) {
-            return;
-          }
-
-          const title = container.dataset.title || 'Embedded video';
-          const thumbnailSource = (container.dataset.thumbnail || '').trim() || `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
-          const labelText = (container.dataset.label || '').trim();
-          const fallback = container.querySelector('noscript');
-
-          const overlay = document.createElement('button');
-          overlay.type = 'button';
-          overlay.className = 'video-embed__overlay';
-          overlay.setAttribute('aria-label', `Play ${title}`);
-
-          const media = document.createElement('span');
-          media.className = 'video-embed__media';
-          const img = document.createElement('img');
-          img.src = thumbnailSource;
-          img.alt = '';
-          img.loading = 'lazy';
-          img.decoding = 'async';
-          media.appendChild(img);
-          overlay.appendChild(media);
-
-          if (labelText) {
-            const label = document.createElement('span');
-            label.className = 'video-embed__label';
-            label.textContent = labelText;
-            overlay.appendChild(label);
-          }
-
-          const playIcon = document.createElement('span');
-          playIcon.className = 'video-embed__play';
-          playIcon.setAttribute('aria-hidden', 'true');
-          overlay.appendChild(playIcon);
-
-          const loadPlayer = () => {
-            const iframe = document.createElement('iframe');
-            iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
-            iframe.title = title;
-            iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
-            iframe.allowFullscreen = true;
-            iframe.loading = 'lazy';
-            iframe.referrerPolicy = 'strict-origin-when-cross-origin';
-            container.innerHTML = '';
-            container.appendChild(iframe);
-          };
-
-          overlay.addEventListener('click', loadPlayer);
-
-          container.innerHTML = '';
-          container.appendChild(overlay);
-          if (fallback) {
-            container.appendChild(fallback);
-          }
           container.dataset.enhanced = 'true';
         });
+      };
+
+      const theatreSlides = {
+        vic: [
+          {
+            type: 'youtube',
+            videoId: 'Y5ax2kVa5m8',
+            title: 'Vic Mensa — Senegal Sessions',
+            description: 'Multi-cam capture from Dakar with live playback notes and handheld camera direction.',
+            link: 'https://www.youtube.com/watch?v=Y5ax2kVa5m8',
+            linkLabel: 'Watch full performance',
+            thumbnail: 'assets/vic swts senegal.png',
+            label: 'Vic Mensa'
+          },
+          {
+            type: 'image',
+            src: 'assets/vic swts senegal.png',
+            title: 'SWTS production still',
+            description: 'Led cue calling and capture for the Senegal stop while coordinating creative handoffs.',
+            alt: 'Vic Mensa performing live with spotlight and red lighting'
+          },
+          {
+            type: 'image',
+            src: 'https://placehold.co/1200x675?text=Vic+Placeholder+2',
+            title: 'Vic Mensa concept board',
+            description: 'Placeholder slide highlighting moodboard imagery until final artwork is ready.',
+            alt: 'Placeholder artwork for Vic Mensa concept board'
+          },
+          {
+            type: 'image',
+            src: 'https://placehold.co/1200x675?text=Vic+Placeholder+3',
+            title: 'Live mix cues (placeholder)',
+            description: 'Temporary still representing live mix cue sheet; update with final capture when available.',
+            alt: 'Placeholder graphic representing live mix cues'
+          }
+        ],
+        nico: [
+          {
+            type: 'youtube',
+            videoId: 'hRLA_FzqGYs',
+            title: 'Nico Segal — Steppenwolf Residency',
+            description: 'Documented Nico’s residency with staged playback, FOH capture, and director notes.',
+            link: 'https://www.youtube.com/watch?v=hRLA_FzqGYs',
+            linkLabel: 'Watch rehearsal capture',
+            thumbnail: 'assets/nico ttgwh steppenwolf.png',
+            label: 'Nico Segal'
+          },
+          {
+            type: 'image',
+            src: 'assets/nico ttgwh steppenwolf.png',
+            title: 'Session coverage still',
+            description: 'Brought hybrid streaming workflow to the Steppenwolf lab, balancing mix and narrative shots.',
+            alt: 'Nico Segal performing with horn section under stage lighting'
+          },
+          {
+            type: 'image',
+            src: 'https://placehold.co/1200x675?text=Nico+Placeholder+2',
+            title: 'Nico Segal rehearsal notes',
+            description: 'Placeholder slide for upcoming rehearsal photography and documentation.',
+            alt: 'Placeholder artwork for Nico Segal rehearsal notes'
+          },
+          {
+            type: 'image',
+            src: 'https://placehold.co/1200x675?text=Nico+Placeholder+3',
+            title: 'FOH setup preview (placeholder)',
+            description: 'Temporary image representing FOH setup overview until final still is delivered.',
+            alt: 'Placeholder graphic representing FOH setup overview'
+          }
+        ]
       };
 
       const theatre = (() => {
@@ -993,7 +1311,11 @@
           <div class="theatre__dialog" role="dialog" aria-modal="true" aria-labelledby="theatre-title" aria-describedby="theatre-description">
             <button class="theatre__close" type="button" aria-label="Close theatre">&times;</button>
             <div class="theatre__body">
-              <div class="theatre__media" data-role="media"></div>
+              <div class="theatre__media">
+                <button class="theatre__nav theatre__nav--prev" type="button" data-role="media-prev" aria-label="Previous slide" hidden><span aria-hidden="true">&#x2039;</span></button>
+                <div class="theatre__media-slot" data-role="media"></div>
+                <button class="theatre__nav theatre__nav--next" type="button" data-role="media-next" aria-label="Next slide" hidden><span aria-hidden="true">&#x203a;</span></button>
+              </div>
               <div class="theatre__details">
                 <h3 class="theatre__title" id="theatre-title"></h3>
                 <p class="theatre__description" id="theatre-description"></p>
@@ -1006,29 +1328,314 @@
 
         const dialog = container.querySelector('.theatre__dialog');
         const closeButton = container.querySelector('.theatre__close');
-        const mediaContainer = container.querySelector('.theatre__media');
+        const mediaSlot = container.querySelector('[data-role="media"]');
+        const navPrev = container.querySelector('[data-role="media-prev"]');
+        const navNext = container.querySelector('[data-role="media-next"]');
+        const detailsEl = container.querySelector('.theatre__details');
         const titleEl = container.querySelector('.theatre__title');
         const descriptionEl = container.querySelector('.theatre__description');
         const linkEl = container.querySelector('.theatre__link');
         const bodyEl = document.body;
 
         let activeTrigger = null;
+        let slideshowState = null;
+
+        const defaultLinkLabel = (type) => {
+          if (type === 'spotify') {
+            return 'Open on Spotify';
+          }
+          if (type === 'youtube') {
+            return 'Watch on YouTube';
+          }
+          return 'Open in new tab';
+        };
+
+        const swapContent = (element, update, animate = true) => {
+          if (!animate) {
+            update();
+            element.classList.remove('is-swapping');
+            return;
+          }
+
+          element.classList.add('is-swapping');
+          requestAnimationFrame(() => {
+            update();
+            requestAnimationFrame(() => {
+              element.classList.remove('is-swapping');
+            });
+          });
+        };
 
         const clearMedia = () => {
-          mediaContainer.innerHTML = '';
+          mediaSlot.innerHTML = '';
+          mediaSlot.classList.remove('is-swapping');
         };
 
         const resetDialogState = () => {
           container.classList.remove('theatre--spotify', 'theatre--youtube', 'theatre--image');
         };
 
-        const handleEscape = (event) => {
-          if (event.key !== 'Escape') {
+        const updateNavVisibility = () => {
+          const hasSlides = !!(slideshowState && slideshowState.slides && slideshowState.slides.length > 1);
+          navPrev.hidden = navNext.hidden = !hasSlides;
+        };
+
+        const setDetails = (meta, animate = true) => {
+          const update = () => {
+            titleEl.textContent = meta.title || '';
+
+            if (meta.description) {
+              descriptionEl.hidden = false;
+              descriptionEl.textContent = meta.description;
+              dialog.setAttribute('aria-describedby', 'theatre-description');
+            } else {
+              descriptionEl.hidden = true;
+              descriptionEl.textContent = '';
+              dialog.removeAttribute('aria-describedby');
+            }
+
+            if (meta.link) {
+              linkEl.hidden = false;
+              linkEl.href = meta.link;
+              linkEl.textContent = meta.linkLabel || defaultLinkLabel(meta.type);
+            } else {
+              linkEl.hidden = true;
+              linkEl.removeAttribute('href');
+              linkEl.textContent = '';
+            }
+          };
+
+          swapContent(detailsEl, update, animate);
+        };
+
+        const getBaseMeta = (trigger) => {
+          const type = trigger.dataset.theatreType || '';
+          const title = trigger.dataset.theatreTitle
+            || (trigger.querySelector('h3') ? trigger.querySelector('h3').textContent.trim() : 'Media detail');
+          const description = trigger.dataset.theatreDescription || '';
+          const link = trigger.dataset.theatreLink || '';
+          const linkLabel = link ? (trigger.dataset.theatreLinkLabel || defaultLinkLabel(type)) : '';
+
+          return { type, title, description, link, linkLabel };
+        };
+
+        const createSingleMediaNode = (meta, trigger) => {
+          if (meta.type === 'spotify' || meta.type === 'youtube') {
+            const placeholder = trigger.dataset.theatreImage || 'https://placehold.co/1200x675?text=Media+Preview';
+            const img = document.createElement('img');
+            img.src = placeholder;
+            img.alt = meta.title || 'Media preview';
+            img.loading = 'lazy';
+            return img;
+          }
+
+          if (meta.type === 'image') {
+            const src = trigger.dataset.theatreSrc || '';
+            if (!src) {
+              return null;
+            }
+
+            const img = document.createElement('img');
+            img.src = src;
+            img.alt = meta.title || 'Media preview';
+            img.loading = 'lazy';
+            return img;
+          }
+
+          return null;
+        };
+
+        const createSlideNode = (slide, fallbackTitle) => {
+          if (slide.type === 'youtube') {
+            if (!slide.videoId) {
+              return null;
+            }
+
+            const title = slide.title || fallbackTitle || 'Video';
+            const container = document.createElement('div');
+            container.className = 'video-embed video-embed--theatre';
+            container.style.setProperty('--video-aspect', '56.25%');
+
+            const overlay = document.createElement('button');
+            overlay.type = 'button';
+            overlay.className = 'video-embed__overlay';
+            overlay.setAttribute('aria-label', `Play ${title}`);
+
+            const media = document.createElement('span');
+            media.className = 'video-embed__media';
+            const img = document.createElement('img');
+            img.src = slide.thumbnail || `https://img.youtube.com/vi/${slide.videoId}/hqdefault.jpg`;
+            img.alt = slide.thumbnailAlt || '';
+            img.loading = 'lazy';
+            img.decoding = 'async';
+            media.appendChild(img);
+            overlay.appendChild(media);
+
+            if (slide.label) {
+              const label = document.createElement('span');
+              label.className = 'video-embed__label';
+              label.textContent = slide.label;
+              overlay.appendChild(label);
+            }
+
+            const playIcon = document.createElement('span');
+            playIcon.className = 'video-embed__play';
+            playIcon.setAttribute('aria-hidden', 'true');
+            overlay.appendChild(playIcon);
+
+            const loadPlayer = () => {
+              const iframe = document.createElement('iframe');
+              const autoplayParam = slide.autoplay === false ? '' : 'autoplay=1&';
+              iframe.src = `https://www.youtube.com/embed/${slide.videoId}?${autoplayParam}rel=0&modestbranding=1`;
+              iframe.title = title;
+              iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+              iframe.allowFullscreen = true;
+              iframe.loading = 'lazy';
+              iframe.referrerPolicy = 'strict-origin-when-cross-origin';
+              container.innerHTML = '';
+              container.appendChild(iframe);
+            };
+
+            overlay.addEventListener('click', loadPlayer, { once: true });
+
+            container.appendChild(overlay);
+            return container;
+          }
+
+          if (slide.type === 'image') {
+            if (!slide.src) {
+              return null;
+            }
+
+            const img = document.createElement('img');
+            img.src = slide.src;
+            img.alt = slide.alt || slide.title || fallbackTitle || 'Creative partnership still';
+            img.loading = 'lazy';
+            img.decoding = 'async';
+            return img;
+          }
+
+          if (slide.src) {
+            const img = document.createElement('img');
+            img.src = slide.src;
+            img.alt = slide.alt || slide.title || fallbackTitle || 'Creative partnership still';
+            img.loading = 'lazy';
+            return img;
+          }
+
+          return null;
+        };
+
+        const stopSlideshow = () => {
+          slideshowState = null;
+          updateNavVisibility();
+        };
+
+        const renderSlide = (animate = true) => {
+          if (!slideshowState) {
             return;
           }
 
-          event.preventDefault();
-          close();
+          const { slides, index, base } = slideshowState;
+          const slide = slides[index];
+          const type = slide.type || base.type;
+          const title = slide.title || base.title;
+          const description = slide.description !== undefined ? slide.description : base.description;
+          const link = slide.link !== undefined ? slide.link : base.link;
+          const linkLabel = link ? (slide.linkLabel || defaultLinkLabel(type)) : '';
+
+          resetDialogState();
+          if (type) {
+            container.classList.add(`theatre--${type}`);
+          }
+
+          const node = createSlideNode(slide, title);
+          if (node) {
+            swapContent(mediaSlot, () => {
+              mediaSlot.innerHTML = '';
+              mediaSlot.appendChild(node);
+            }, animate);
+          } else {
+            clearMedia();
+          }
+
+          setDetails({ type, title, description, link, linkLabel }, animate);
+          updateNavVisibility();
+        };
+
+        const changeSlide = (direction) => {
+          if (!slideshowState || !slideshowState.slides.length) {
+            return;
+          }
+
+          const slideCount = slideshowState.slides.length;
+          slideshowState.index = (slideshowState.index + direction + slideCount) % slideCount;
+          renderSlide();
+        };
+
+        const handleKeydown = (event) => {
+          if (event.key === 'Escape') {
+            event.preventDefault();
+            close();
+            return;
+          }
+
+          if (!slideshowState || event.altKey || event.ctrlKey || event.metaKey) {
+            return;
+          }
+
+          if (event.key === 'ArrowRight') {
+            event.preventDefault();
+            changeSlide(1);
+          } else if (event.key === 'ArrowLeft') {
+            event.preventDefault();
+            changeSlide(-1);
+          }
+        };
+
+        const open = (trigger) => {
+          if (!trigger) {
+            return;
+          }
+
+          activeTrigger = trigger;
+          const baseMeta = getBaseMeta(trigger);
+
+          resetDialogState();
+          clearMedia();
+
+          const slideshowKey = trigger.dataset.theatreSlideshow || '';
+          const slides = slideshowKey ? theatreSlides[slideshowKey] : null;
+
+          if (Array.isArray(slides) && slides.length) {
+            slideshowState = {
+              key: slideshowKey,
+              slides,
+              index: 0,
+              base: baseMeta
+            };
+            renderSlide(false);
+          } else {
+            stopSlideshow();
+
+            if (baseMeta.type) {
+              container.classList.add(`theatre--${baseMeta.type}`);
+            }
+
+            const node = createSingleMediaNode(baseMeta, trigger);
+            if (!node) {
+              return;
+            }
+
+            mediaSlot.innerHTML = '';
+            mediaSlot.appendChild(node);
+            setDetails(baseMeta, false);
+          }
+
+          container.hidden = false;
+          bodyEl.classList.add('is-theatre-open');
+          document.addEventListener('keydown', handleKeydown, true);
+          closeButton.focus({ preventScroll: true });
         };
 
         const close = () => {
@@ -1039,8 +1646,9 @@
           container.hidden = true;
           clearMedia();
           resetDialogState();
+          stopSlideshow();
           bodyEl.classList.remove('is-theatre-open');
-          document.removeEventListener('keydown', handleEscape, true);
+          document.removeEventListener('keydown', handleKeydown, true);
 
           if (activeTrigger) {
             activeTrigger.focus({ preventScroll: true });
@@ -1048,81 +1656,8 @@
           activeTrigger = null;
         };
 
-        const renderLink = (trigger) => {
-          const link = trigger.dataset.theatreLink || '';
-          if (!link) {
-            linkEl.hidden = true;
-            linkEl.removeAttribute('href');
-            linkEl.textContent = '';
-            return;
-          }
-
-          const label = trigger.dataset.theatreLinkLabel
-            || (trigger.dataset.theatreType === 'spotify' ? 'Open on Spotify' : 'Open in new tab');
-          linkEl.hidden = false;
-          linkEl.href = link;
-          linkEl.textContent = label;
-        };
-
-        const open = (trigger) => {
-          if (!trigger) {
-            return;
-          }
-
-          activeTrigger = trigger;
-          const type = trigger.dataset.theatreType || '';
-          const title = trigger.dataset.theatreTitle
-            || (trigger.querySelector('h3') ? trigger.querySelector('h3').textContent.trim() : 'Media detail');
-          const description = trigger.dataset.theatreDescription || '';
-
-          resetDialogState();
-          if (type) {
-            container.classList.add(`theatre--${type}`);
-          }
-
-          titleEl.textContent = title;
-          if (description) {
-            descriptionEl.hidden = false;
-            descriptionEl.textContent = description;
-            dialog.setAttribute('aria-describedby', 'theatre-description');
-          } else {
-            descriptionEl.hidden = true;
-            descriptionEl.textContent = '';
-            dialog.removeAttribute('aria-describedby');
-          }
-
-          renderLink(trigger);
-          clearMedia();
-
-          let node = null;
-          if (type === 'spotify' || type === 'youtube') {
-            const placeholder = trigger.dataset.theatreImage || 'https://placehold.co/1200x675?text=Media+Preview';
-            node = document.createElement('img');
-            node.src = placeholder;
-            node.alt = title;
-            node.loading = 'lazy';
-          } else if (type === 'image') {
-            const src = trigger.dataset.theatreSrc || '';
-            if (!src) {
-              return;
-            }
-
-            node = document.createElement('img');
-            node.src = src;
-            node.alt = title;
-            node.loading = 'lazy';
-          } else {
-            return;
-          }
-
-          mediaContainer.appendChild(node);
-
-          container.hidden = false;
-          bodyEl.classList.add('is-theatre-open');
-          document.addEventListener('keydown', handleEscape, true);
-          closeButton.focus({ preventScroll: true });
-        };
-
+        navPrev.addEventListener('click', () => changeSlide(-1));
+        navNext.addEventListener('click', () => changeSlide(1));
         closeButton.addEventListener('click', close);
         container.addEventListener('pointerdown', (event) => {
           if (!event.target.closest('.theatre__dialog')) {
@@ -1133,32 +1668,7 @@
         return { open, close };
       })();
 
-      const handleTheatreActivation = (event) => {
-        const trigger = event.currentTarget;
-        if (!trigger) {
-          return;
-        }
-
-        if (event.ctrlKey || event.metaKey || event.altKey) {
-          return;
-        }
-
-        const isSpace = event.key === ' ' || event.key === 'Spacebar' || event.code === 'Space';
-        const isEnter = event.key === 'Enter';
-        if (!isSpace && !isEnter) {
-          return;
-        }
-
-        if (event.repeat) {
-          event.preventDefault();
-          return;
-        }
-
-        event.preventDefault();
-        theatre.open(trigger);
-      };
-
-      const theatreButtons = Array.from(document.querySelectorAll('.media-panel__action'));
+      const theatreButtons = Array.from(document.querySelectorAll('.media-panel__action, .spotify-info-cta'));
 
       theatreButtons.forEach((button) => {
         button.addEventListener('click', (event) => {
@@ -1185,12 +1695,11 @@
           theatre.open(trigger);
         });
 
-        trigger.addEventListener('keydown', handleTheatreActivation);
       });
 
       waypointLinks.forEach((link) => {
         link.addEventListener('click', (event) => {
-          const targetId = link.hash.slice(1);
+          const targetId = waypointTarget(link);
           const targetSection = sections.find((section) => section.id === targetId);
 
           if (!targetSection) {
@@ -1206,40 +1715,15 @@
         });
       });
 
-      const focusTile = (index) => {
-        const tile = tiles[index];
-        if (!tile) {
-          return;
-        }
-
-        tile.focus();
-        tile.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      };
-
-      tiles.forEach((tile, index) => {
-        if (!tile.hasAttribute('tabindex')) {
-          tile.tabIndex = 0;
-        }
-
-        tile.addEventListener('keydown', (event) => {
-          if (event.key !== 'Tab' || event.ctrlKey || event.metaKey || event.altKey) {
-            return;
-          }
-
-          event.preventDefault();
-          const direction = event.shiftKey ? -1 : 1;
-          const nextIndex = (index + direction + tiles.length) % tiles.length;
-          focusTile(nextIndex);
-        });
-      });
-
       enhanceVideoEmbeds();
 
       const initialTarget = window.location.hash.slice(1);
       const initialSection = sections.find((section) => section.id === initialTarget) || sections[0];
       if (initialSection) {
-        setActive(initialSection.id);
+        updateActiveLink(initialSection.id);
       }
+
+      updateActiveByScroll();
     })();
   </script>
 
