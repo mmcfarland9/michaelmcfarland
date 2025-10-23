@@ -285,6 +285,11 @@
       z-index: 2;
     }
 
+    .edu-inline {
+      display: inline-block;
+      margin-left: 0.35rem;
+    }
+
     .media-panel:hover .media-panel__cover::before,
     .media-panel:hover .media-panel__cover::after {
       opacity: 1;
@@ -733,8 +738,8 @@
 
     .theatre__dialog {
       position: relative;
-      width: min(960px, 100%);
-      max-height: min(92vh, 720px);
+      width: min(1180px, calc(100vw - clamp(2rem, 6vw, 4rem)));
+      max-height: min(92vh, 820px);
       background: #0f1115;
       color: #f5f5f5;
       border-radius: 0.75rem;
@@ -754,10 +759,28 @@
 
     @media (min-width: 760px) {
       .theatre__body {
-        grid-template-columns: 3fr 2fr;
+        grid-template-columns: minmax(0, 3.25fr) minmax(260px, 2fr);
         align-items: start;
         max-height: inherit;
       }
+    }
+
+    @media (max-width: 759px) {
+      .theatre__dialog {
+        width: calc(100vw - clamp(1rem, 4vw, 2rem));
+        max-height: 90vh;
+      }
+
+      .theatre__media {
+        min-height: clamp(240px, 55vh, 520px);
+      }
+    }
+
+    .theatre__visual {
+      display: flex;
+      flex-direction: column;
+      gap: clamp(0.35rem, 1.2vw, 0.6rem);
+      min-width: 0;
     }
 
     .theatre__media {
@@ -769,7 +792,8 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      min-height: 220px;
+      aspect-ratio: 16 / 9;
+      min-height: clamp(320px, 55vh, 680px);
       box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
     }
 
@@ -791,15 +815,50 @@
 
     .theatre__media iframe {
       width: 100%;
-      height: auto;
+      height: 100%;
       border: 0;
-      aspect-ratio: 16 / 9;
     }
 
     .theatre--image .theatre__media img {
       object-fit: contain;
-      max-height: 65vh;
       background: #050505;
+    }
+
+    .theatre__media-slot > * {
+      width: 100%;
+      height: 100%;
+    }
+
+    .theatre__media-slot > video {
+      object-fit: cover;
+    }
+
+    .theatre__media-slot .video-embed {
+      height: 100%;
+      padding-bottom: 0;
+    }
+
+    .theatre__media-slot .video-embed iframe,
+    .theatre__media-slot .video-embed__overlay,
+    .theatre__media-slot .video-embed__media {
+      height: 100%;
+    }
+
+    .theatre__caption {
+      margin: 0;
+      font-size: 0.95rem;
+      font-style: italic;
+      color: rgba(245, 245, 245, 0.75);
+      text-align: center;
+      transition: opacity 0.25s ease;
+    }
+
+    .theatre__caption.is-swapping {
+      opacity: 0;
+    }
+
+    .theatre__caption[hidden] {
+      display: none;
     }
 
     .theatre__nav {
@@ -857,7 +916,8 @@
 
     @media (prefers-reduced-motion: reduce) {
       .theatre__media-slot,
-      .theatre__details {
+      .theatre__details,
+      .theatre__caption {
         transition: none;
       }
     }
@@ -944,15 +1004,15 @@
       <div class="examples">
         <article>
           <h3>Overview</h3>
-          <p>Interdisciplinary artist and technologist connecting live performance, studio craft, and narrative media.</p>
-          <p>Leads collaborative teams with clear communication, meticulous prep, and a focus on emotionally resonant results.</p>
-          <p>Equally at home in rehearsal rooms, editing suites, and production labs, translating ideas into experiences.</p>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod nisl eu luctus porta.</p>
+          <p>Vestibulum dapibus elit at magna posuere, eu pharetra velit luctus. Integer faucibus mauris ac sapien luctus interdum.</p>
+          <p>Curabitur finibus neque sed tempor viverra. Duis fermentum est ut sapien aliquet, ac vehicula libero dictum.</p>
         </article>
         <article>
           <h3>Education & Credentials</h3>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque id laoreet metus, a aliquam metus.</p>
-          <p>Integer fermentum, urna vel viverra gravida, sem odio auctor dolor, vitae bibendum nibh felis a massa.</p>
-          <p>Morbi vel leo sed lectus blandit vulputate. Sed euismod mauris at lectus laoreet, at dapibus nisl ultrices.</p>
+          <p><strong>University of Notre Dame</strong><span class="edu-inline">Mendoza College of Business</span><span class="edu-inline">BBA in Finance, 2020</span><span class="edu-inline">GPA: 4.0, <em>summa cum laude</em></span></p>
+          <p><strong>Graduate Record Examinations</strong><span class="edu-inline">170 Quantitative Reasoning</span><span class="edu-inline">166 Verbal Reasoning</span></p>
+          <p><strong>Professional Certifications</strong><span class="edu-inline">Harvard edX Deploying TinyML (Embedded)</span><span class="edu-inline">Stanford DeepLearning.AI ML Specialization</span></p>
         </article>
       </div>
     </section>
@@ -962,8 +1022,8 @@
       <div class="examples">
         <article class="feature full-width tall ssr-highlight">
           <h3>Second Street Records</h3>
-          <p>Lead producer and co-founder steering the label's artist development, release campaigns, and creative direction.</p>
-          <p>Built collaborative production workflows, coordinated marketing rollouts, and guided partnerships from demo to release-ready masters.</p>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sodales odio non tortor pellentesque viverra.</p>
+          <p>Praesent euismod massa ac mi condimentum, vitae malesuada neque elementum. Aliquam tempus mauris et vestibulum posuere.</p>
           <div class="ssr-visuals">
             <img src="assets/SSR_StreetSignDude.png" alt="Street sign character illustration" class="ssr-visuals__street" loading="lazy">
             <img src="assets/SSR_LoudSpeaker1.png" alt="Loudspeaker illustration" class="ssr-visuals__speaker" loading="lazy">
@@ -972,13 +1032,13 @@
         </article>
         <article class="feature">
           <h3>Private Math Tutor</h3>
-          <p>Guided secondary and college students through algebra, calculus, and statistics with tailored lessons aligned to their goals.</p>
-          <p>Combined diagnostic assessments, real-world examples, and iterative practice plans to build lasting confidence.</p>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam porttitor arcu in efficitur auctor.</p>
+          <p>Suspendisse potenti. Integer tempor lorem in ipsum sollicitudin, at tincidunt justo rhoncus.</p>
         </article>
         <article>
           <h3>Finance Professional</h3>
-          <p>Collaborated with cross-functional teams to evaluate budgets, forecast cash flow, and communicate risk scenarios with clarity.</p>
-          <p>Developed lightweight dashboards that kept stakeholders aligned on KPIs, compliance deadlines, and strategic pivots.</p>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras volutpat nibh et justo iaculis pretium.</p>
+          <p>Nullam scelerisque metus nec mauris convallis, in pharetra tellus dapibus. Curabitur pretium nisl vitae orci auctor dictum.</p>
         </article>
       </div>
     </section>
@@ -988,14 +1048,14 @@
       <div class="examples">
         <article class="feature">
           <h3>Select Music Releases</h3>
-          <p>Selected releases highlight cross-genre collaborations, detailed vocal production, and narratives shaped for repeat listening.</p>
-          <p>Behind the scenes logs chronicle session setups, mix revisions, and mastering notes for future reference.</p>
-          <p>Produces records that balance cinematic scope with intimate performances, shaping arrangements and mixes end-to-end.</p>
-          <p>Leads hybrid studio workflows, coordinates session players, and keeps deliverables aligned with rollout calendars.</p>
-          <p>Coaches artists through arrangement choices, vocal takes, and post-production to keep every project intentional.</p>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus blandit sem vitae turpis feugiat posuere.</p>
+          <p>Suspendisse a urna pulvinar, porttitor arcu sed, placerat libero. Pellentesque commodo nisi eu turpis pretium.</p>
+          <p>Quisque vel risus nec orci tempor accumsan. Integer malesuada lacus sed nibh finibus, sit amet tristique dui suscipit.</p>
+          <p>Mauris rhoncus odio id dui venenatis, vel malesuada erat vehicula. In hac habitasse platea dictumst.</p>
+          <p>Sed sagittis velit arcu, et bibendum ante pulvinar vel. Donec viverra nibh et mauris feugiat hendrerit.</p>
         </article>
-        <article class="media-panel" aria-label="Open Spotify Highlight — Track One in theatre view" data-theatre-type="spotify" data-theatre-image="https://placehold.co/1200x675?text=Spotify+Preview+1" data-theatre-title="Spotify Highlight — Track One" data-theatre-description="Listen in a focused theatre view to explore arrangement notes and session context." data-theatre-link="https://open.spotify.com/track/12FnOWzpxUtOj5hW1xhV6A">
-          <h3 class="sr-only">Spotify Highlight — Track One</h3>
+        <article class="media-panel" aria-label="Open Chance release loop in theatre view" data-theatre-type="video" data-theatre-video="assets/chance%20spotify%20embed.mp4" data-theatre-title="Chance Release Loop" data-theatre-description="In fall of 2024, I was invited to Chance the Rapper's home for a songwriting camp with collaborator Vic Mensa. I facilitated the set-up and running of the guest studio.<br><br>As our usual process goes, Vic and I spent hours listening to material, sharing our perspectives on a topic, and crafting a songwriting approach. One particularly inspired recording session resulted in &quot;Back to the Go.&quot;<br><br>This song, featuring an interpolation of Djo's smash hit &quot;End of Beginning,&quot; appeared on Chance the Rapper's long-anticipated STAR LINE (2025), marking his first full-length release in six years." data-theatre-link="https://open.spotify.com/track/12FnOWzpxUtOj5hW1xhV6A" data-theatre-link-label="Open on Spotify" data-theatre-caption="Chance the Rapper's &quot;House of Kicks&quot; creative HQ, as rendered by Meta Hyperscape technology; this environment, and many more rooms, are fully explorable using a Quest VR headset.">
+          <h3 class="sr-only">Chance Release Loop</h3>
           <div class="spotify-tile" style="--cta-color: #1f1f1f;">
             <iframe class="spotify-embed" data-testid="embed-iframe" src="https://open.spotify.com/embed/track/12FnOWzpxUtOj5hW1xhV6A?utm_source=generator&theme=0" frameborder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" allowfullscreen loading="lazy"></iframe>
             <div class="spotify-cta">
@@ -1003,7 +1063,7 @@
             </div>
           </div>
         </article>
-        <article class="media-panel" aria-label="Open Spotify Highlight — Track Two in theatre view" data-theatre-type="spotify" data-theatre-image="https://placehold.co/1200x675?text=Spotify+Preview+2" data-theatre-title="Spotify Highlight — Track Two" data-theatre-description="Switch to theatre mode for production details and session anecdotes." data-theatre-link="https://open.spotify.com/track/0voj7Ay0GVRrquyB9mBA2y">
+        <article class="media-panel" aria-label="Open Spotify Highlight — Track Two in theatre view" data-theatre-type="spotify" data-theatre-image="https://placehold.co/1200x675?text=Spotify+Preview+2" data-theatre-title="Spotify Highlight — Track Two" data-theatre-description="Switch to theatre mode for production details and session anecdotes." data-theatre-link="https://open.spotify.com/track/0voj7Ay0GVRrquyB9mBA2y" data-theatre-link-label="Open on Spotify">
           <h3 class="sr-only">Spotify Highlight — Track Two</h3>
           <div class="spotify-tile" style="--cta-color: #1d5589;">
             <iframe class="spotify-embed" data-testid="embed-iframe" src="https://open.spotify.com/embed/track/0voj7Ay0GVRrquyB9mBA2y?utm_source=generator" frameborder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" allowfullscreen loading="lazy"></iframe>
@@ -1012,7 +1072,7 @@
             </div>
           </div>
         </article>
-        <article class="media-panel" aria-label="Open Spotify Highlight — Track Three in theatre view" data-theatre-type="spotify" data-theatre-image="https://placehold.co/1200x675?text=Spotify+Preview+3" data-theatre-title="Spotify Highlight — Track Three" data-theatre-description="Open the theatre overlay for notes on mix decisions and mastering references." data-theatre-link="https://open.spotify.com/track/3C1siYoB2IfUGznAWj4cKt">
+        <article class="media-panel" aria-label="Open Spotify Highlight — Track Three in theatre view" data-theatre-type="spotify" data-theatre-image="https://placehold.co/1200x675?text=Spotify+Preview+3" data-theatre-title="Spotify Highlight — Track Three" data-theatre-description="Open the theatre overlay for notes on mix decisions and mastering references." data-theatre-link="https://open.spotify.com/track/3C1siYoB2IfUGznAWj4cKt" data-theatre-link-label="Open on Spotify">
           <h3 class="sr-only">Spotify Highlight — Track Three</h3>
           <div class="spotify-tile" style="--cta-color: #8d3500;">
             <iframe class="spotify-embed" data-testid="embed-iframe" src="https://open.spotify.com/embed/track/3C1siYoB2IfUGznAWj4cKt?utm_source=generator" frameborder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" allowfullscreen loading="lazy"></iframe>
@@ -1021,7 +1081,7 @@
             </div>
           </div>
         </article>
-        <article class="media-panel" aria-label="Open Spotify Highlight — Track Four in theatre view" data-theatre-type="spotify" data-theatre-image="https://placehold.co/1200x675?text=Spotify+Preview+4" data-theatre-title="Spotify Highlight — Track Four" data-theatre-description="Dive deeper into arrangement callouts, references, and release rollout checkpoints." data-theatre-link="https://open.spotify.com/track/2Z1zCAPOKStVHLefB9NL4c">
+        <article class="media-panel" aria-label="Open Spotify Highlight — Track Four in theatre view" data-theatre-type="spotify" data-theatre-image="https://placehold.co/1200x675?text=Spotify+Preview+4" data-theatre-title="Spotify Highlight — Track Four" data-theatre-description="Dive deeper into arrangement callouts, references, and release rollout checkpoints." data-theatre-link="https://open.spotify.com/track/2Z1zCAPOKStVHLefB9NL4c" data-theatre-link-label="Open on Spotify">
           <h3 class="sr-only">Spotify Highlight — Track Four</h3>
           <div class="spotify-tile" style="--cta-color: #54544d;">
             <iframe class="spotify-embed" data-testid="embed-iframe" src="https://open.spotify.com/embed/track/2Z1zCAPOKStVHLefB9NL4c?utm_source=generator" frameborder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" allowfullscreen loading="lazy"></iframe>
@@ -1032,8 +1092,8 @@
         </article>
         <article class="feature">
           <h3>Select Creative Partnerships</h3>
-          <p>Live captures highlight collaborative direction across theatre residencies, tour stops, and hybrid streaming builds.</p>
-          <p>Detailed call sheets and pre-production decks align lighting, audio, and narrative beats before cameras roll.</p>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer tristique lorem id nulla interdum pretium.</p>
+          <p>Vestibulum non risus non nibh dapibus dictum. Curabitur id leo nibh, in rhoncus turpis.</p>
         </article>
         <div class="media-pair">
           <article class="media-panel" aria-label="Open Vic Mensa partnership in theatre view" data-theatre-type="youtube" data-video-id="Y5ax2kVa5m8" data-theatre-image="https://placehold.co/1200x675?text=Vic+Mensa" data-theatre-title="Vic Mensa Partnership" data-theatre-description="A performance partnership spotlight featuring Vic Mensa and live production notes." data-theatre-slideshow="vic">
@@ -1053,9 +1113,9 @@
         </div>
         <article>
           <h3>Media Industry</h3>
-          <p>Storyboards music videos, concert films, and promotional shorts that extend sound into visual storytelling.</p>
-          <p><strong>Workflow:</strong> Align creatives in pre-production, capture multi-cam performances, and deliver color-managed edits for broadcast and social releases.</p>
-          <p>Archives include documentaries, lyric videos, and live session reels ready for press kits and distributor briefs.</p>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus aliquam turpis sit amet lectus sagittis porta.</p>
+          <p><strong>Workflow:</strong> Curabitur vitae nisl ac lacus imperdiet porta. Donec dictum tellus nec eros tristique, in dignissim felis faucibus.</p>
+          <p>Praesent varius sapien quis lacus posuere, ut fermentum dolor tempor. Fusce aliquet erat nec ante vulputate, at pretium magna finibus.</p>
         </article>
       </div>
     </section>
@@ -1065,24 +1125,24 @@
       <div class="examples">
         <article class="feature">
           <h3>Untitled VoiceDAW App</h3>
-          <p>Rapid-prototyped a voice-driven workstation that captures performances, transcribes takes, and routes stems without touching a mouse.</p>
-          <p>Modular engine supports scene-based arrangements, live looping, and MIDI control surfaces for adaptive shows.</p>
-          <p>Focus on accessibility ensures artists with mobility considerations can direct complex sessions with simple phrases.</p>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque imperdiet turpis a augue elementum imperdiet.</p>
+          <p>Integer fermentum justo vitae tincidunt aliquam. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae.</p>
+          <p>Donec eget dui rutrum, luctus lectus non, dignissim risus. Nullam luctus arcu id lorem fringilla, quis pulvinar ante tristique.</p>
         </article>
         <article aria-label="Open Elemental VST Plugin Interface in theatre view" data-theatre-type="image" data-theatre-src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1920&q=90" data-theatre-title="Elemental VST Plugin Interface" data-theatre-description="Interface concept art for the Elemental dynamics suite, highlighting automation lanes and signal flow overlays.">
           <h3>Elemental VST Plugin</h3>
-          <p>Designing a multi-band dynamics suite that pairs spectral analysis with intuitive macro controls musicians trust on stage.</p>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam pharetra purus vitae augue sodales, vitae interdum tortor facilisis.</p>
           <figure>
             <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=960&q=80" alt="Abstract user interface for audio software">
             <figcaption>Interface explorations emphasize clarity, real-time feedback, and tactile automation lanes.</figcaption>
           </figure>
-          <p>Parameter locking, snapshot recall, and MIDI learn support slot seamlessly into modern DAW workflows.</p>
+          <p>Praesent tempus lacus ac eros pellentesque, ut congue metus efficitur. Mauris vestibulum ante non lorem consequat dignissim.</p>
         </article>
         <article>
           <h3>DAW/Tool Expertise</h3>
-          <p>Daily work in Logic Pro, Pro Tools, Ableton Live, and Reaper with custom templates tuned for editing speed and recall.</p>
-          <p>Builds macros, control surface mappings, and automation frameworks that translate across rooms and collaborators.</p>
-          <p>Hybrid routing bridges analog front ends with in-the-box precision without sacrificing spontaneity.</p>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi finibus magna id enim semper, vitae feugiat ipsum pulvinar.</p>
+          <p>Etiam aliquet libero at justo viverra, ut convallis tellus maximus. Cras suscipit felis a ex ultrices, at pharetra ipsum posuere.</p>
+          <p>Suspendisse potenti. Aenean euismod mi nec tincidunt faucibus, eu mattis dui iaculis.</p>
         </article>
         <article>
           <h3>PLACEHOLDER</h3>
@@ -1097,7 +1157,7 @@
       <div class="examples">
         <article class="feature" aria-label="Open Studio Build Control Room in theatre view" data-theatre-type="image" data-theatre-src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1920&q=90" data-theatre-title="Studio Build Control Room" data-theatre-description="Dive into the control room reference build, including routing diagrams and acoustical treatment callouts.">
           <h3>Studio Build</h3>
-          <p>Purpose-built control room with tuned acoustics, modular furniture, and flexible routing to support rapid context switching.</p>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam tincidunt orci id massa lacinia, a ullamcorper nunc facilisis.</p>
           <figure>
             <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=960&q=80" alt="Developer workstation with multiple monitors and audio gear">
             <figcaption>Signal flow diagrams and recall sheets keep sessions consistent, whether tracking, mixing, or livestreaming.</figcaption>
@@ -1105,20 +1165,20 @@
         </article>
         <article>
           <h3>Microcontrollers</h3>
-          <p>Builds custom control surfaces, lighting cues, and automation rigs with Arduino, Raspberry Pi, and MIDI grid hardware.</p>
-          <p>Integrated show automation keeps playback, timecode, and lighting synchronized from rehearsal to performance.</p>
-          <p>Utility devices streamline studio ergonomics, power management, and patchbay routing under tight turnarounds.</p>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla dignissim justo nec mi cursus, ac pretium velit consequat.</p>
+          <p>Mauris eu lacus at erat tempor ultrices. Pellentesque non magna vitae tellus suscipit condimentum.</p>
+          <p>Donec convallis risus sit amet mauris tristique, sed fermentum sem egestas. Vivamus tristique erat sed ante fermentum tincidunt.</p>
         </article>
         <article class="tall">
           <h3>Instrument Craft</h3>
-          <p>Designs pedalboards, rewires guitars, and fabricates extended-range instruments to match each artist blueprint.</p>
-          <p><strong>Focus:</strong> Stage-ready reliability, silent switching, and tones that travel well between studio and tour.</p>
-          <p>Detailed documentation supports future repairs, rentals, and collaborative builds.</p>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vel mauris massa, sed tincidunt ex.</p>
+          <p><strong>Focus:</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer aliquet justo id felis fermentum, vitae convallis nibh dignissim.</p>
+          <p>Etiam ut magna nec risus rhoncus placerat. Pellentesque sodales justo in consequat pretium.</p>
         </article>
         <article>
           <h3>Analog Audio + Soldering</h3>
-          <p>Maintains outboard processing chains, patchbays, and summing rigs with calibrated gain staging and noise-floor audits.</p>
-          <p>Redundant power, mirrored storage, and emergency kits keep mission-critical sessions online when stakes are high.</p>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras egestas nunc sed nibh sollicitudin, et volutpat justo pellentesque.</p>
+          <p>Nam tempus turpis et elit blandit, non imperdiet justo elementum. Duis aliquam mauris non erat scelerisque pretium.</p>
         </article>
       </div>
     </section>
@@ -1128,11 +1188,11 @@
       <div class="examples">
         <article class="feature">
           <h3>Reach Out</h3>
-          <p>Email <a href="mailto:mcfarland.michael.p@gmail.com">mcfarland.michael.p@gmail.com</a> with project details, timelines, and any reference material you would like reviewed.</p>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. <a href="mailto:mcfarland.michael.p@gmail.com">Contact via email</a> to share placeholder project details.</p>
         </article>
         <article>
           <h3>Stay Connected</h3>
-          <p>Follow along on social platforms, subscribe to release updates, or connect through <a href="https://github.com/michaelmcfarland" target="_blank" rel="noreferrer">GitHub</a>.</p>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Follow along through <a href="https://github.com/michaelmcfarland" target="_blank" rel="noreferrer">GitHub</a> and other lorem updates.</p>
         </article>
       </div>
     </section>
@@ -1311,10 +1371,13 @@
           <div class="theatre__dialog" role="dialog" aria-modal="true" aria-labelledby="theatre-title" aria-describedby="theatre-description">
             <button class="theatre__close" type="button" aria-label="Close theatre">&times;</button>
             <div class="theatre__body">
-              <div class="theatre__media">
-                <button class="theatre__nav theatre__nav--prev" type="button" data-role="media-prev" aria-label="Previous slide" hidden><span aria-hidden="true">&#x2039;</span></button>
-                <div class="theatre__media-slot" data-role="media"></div>
-                <button class="theatre__nav theatre__nav--next" type="button" data-role="media-next" aria-label="Next slide" hidden><span aria-hidden="true">&#x203a;</span></button>
+              <div class="theatre__visual">
+                <div class="theatre__media">
+                  <button class="theatre__nav theatre__nav--prev" type="button" data-role="media-prev" aria-label="Previous slide" hidden><span aria-hidden="true">&#x2039;</span></button>
+                  <div class="theatre__media-slot" data-role="media"></div>
+                  <button class="theatre__nav theatre__nav--next" type="button" data-role="media-next" aria-label="Next slide" hidden><span aria-hidden="true">&#x203a;</span></button>
+                </div>
+                <p class="theatre__caption" data-role="caption" hidden></p>
               </div>
               <div class="theatre__details">
                 <h3 class="theatre__title" id="theatre-title"></h3>
@@ -1329,6 +1392,7 @@
         const dialog = container.querySelector('.theatre__dialog');
         const closeButton = container.querySelector('.theatre__close');
         const mediaSlot = container.querySelector('[data-role="media"]');
+        const captionEl = container.querySelector('[data-role="caption"]');
         const navPrev = container.querySelector('[data-role="media-prev"]');
         const navNext = container.querySelector('[data-role="media-next"]');
         const detailsEl = container.querySelector('.theatre__details');
@@ -1347,7 +1411,20 @@
           if (type === 'youtube') {
             return 'Watch on YouTube';
           }
+          if (type === 'video') {
+            return 'Open media file';
+          }
           return 'Open in new tab';
+        };
+
+        const formatDescription = (text) => {
+          if (!text) {
+            return '';
+          }
+
+          return String(text)
+            .replace(/\r?\n\r?\n/g, '<br><br>')
+            .replace(/STAR LINE/g, '<em>STAR LINE</em>');
         };
 
         const swapContent = (element, update, animate = true) => {
@@ -1372,7 +1449,7 @@
         };
 
         const resetDialogState = () => {
-          container.classList.remove('theatre--spotify', 'theatre--youtube', 'theatre--image');
+          container.classList.remove('theatre--spotify', 'theatre--youtube', 'theatre--image', 'theatre--video');
         };
 
         const updateNavVisibility = () => {
@@ -1384,13 +1461,14 @@
           const update = () => {
             titleEl.textContent = meta.title || '';
 
-            if (meta.description) {
+            const descriptionValue = meta.description;
+            if (descriptionValue) {
               descriptionEl.hidden = false;
-              descriptionEl.textContent = meta.description;
+              descriptionEl.innerHTML = formatDescription(descriptionValue);
               dialog.setAttribute('aria-describedby', 'theatre-description');
             } else {
               descriptionEl.hidden = true;
-              descriptionEl.textContent = '';
+              descriptionEl.innerHTML = '';
               dialog.removeAttribute('aria-describedby');
             }
 
@@ -1408,6 +1486,27 @@
           swapContent(detailsEl, update, animate);
         };
 
+        const setCaption = (caption, animate = true) => {
+          if (!captionEl) {
+            return;
+          }
+
+          const text = caption ? caption.trim() : '';
+          const shouldAnimate = animate && !captionEl.hidden;
+
+          const update = () => {
+            if (text) {
+              captionEl.hidden = false;
+              captionEl.textContent = text;
+            } else {
+              captionEl.hidden = true;
+              captionEl.textContent = '';
+            }
+          };
+
+          swapContent(captionEl, update, shouldAnimate);
+        };
+
         const getBaseMeta = (trigger) => {
           const type = trigger.dataset.theatreType || '';
           const title = trigger.dataset.theatreTitle
@@ -1415,8 +1514,9 @@
           const description = trigger.dataset.theatreDescription || '';
           const link = trigger.dataset.theatreLink || '';
           const linkLabel = link ? (trigger.dataset.theatreLinkLabel || defaultLinkLabel(type)) : '';
+          const caption = trigger.dataset.theatreCaption || '';
 
-          return { type, title, description, link, linkLabel };
+          return { type, title, description, link, linkLabel, caption };
         };
 
         const createSingleMediaNode = (meta, trigger) => {
@@ -1427,6 +1527,32 @@
             img.alt = meta.title || 'Media preview';
             img.loading = 'lazy';
             return img;
+          }
+
+          if (meta.type === 'video') {
+            const src = trigger.dataset.theatreVideo || trigger.dataset.theatreSrc || '';
+            if (!src) {
+              return null;
+            }
+
+            const video = document.createElement('video');
+            video.src = src;
+            video.setAttribute('playsinline', '');
+            video.setAttribute('muted', '');
+            video.setAttribute('loop', '');
+            video.setAttribute('autoplay', '');
+            video.setAttribute('preload', 'auto');
+            video.muted = true;
+            video.autoplay = true;
+            video.loop = true;
+            video.playsInline = true;
+            video.setAttribute('aria-label', meta.title ? `${meta.title} preview video` : 'Media preview video');
+            video.addEventListener('canplay', () => {
+              if (video.paused) {
+                video.play().catch(() => {});
+              }
+            }, { once: true });
+            return video;
           }
 
           if (meta.type === 'image') {
@@ -1515,6 +1641,47 @@
             return img;
           }
 
+          if (slide.type === 'video') {
+            const src = slide.src || slide.video || '';
+            if (!src) {
+              return null;
+            }
+
+            const video = document.createElement('video');
+            video.src = src;
+            video.setAttribute('playsinline', '');
+            const shouldMute = slide.muted !== false;
+            const shouldLoop = slide.loop !== false;
+            const shouldAutoplay = slide.autoplay !== false;
+            if (shouldMute) {
+              video.setAttribute('muted', '');
+            }
+            if (shouldLoop) {
+              video.setAttribute('loop', '');
+            }
+            if (shouldAutoplay) {
+              video.setAttribute('autoplay', '');
+            }
+            video.setAttribute('preload', slide.preload || 'auto');
+            video.muted = shouldMute;
+            video.autoplay = shouldAutoplay;
+            video.loop = shouldLoop;
+            video.playsInline = true;
+            if (slide.poster) {
+              video.poster = slide.poster;
+            }
+            if (slide.controls) {
+              video.controls = true;
+            }
+            video.setAttribute('aria-label', slide.title ? `${slide.title} preview video` : 'Media preview video');
+            video.addEventListener('canplay', () => {
+              if (shouldAutoplay && video.paused) {
+                video.play().catch(() => {});
+              }
+            }, { once: true });
+            return video;
+          }
+
           if (slide.src) {
             const img = document.createElement('img');
             img.src = slide.src;
@@ -1543,6 +1710,7 @@
           const description = slide.description !== undefined ? slide.description : base.description;
           const link = slide.link !== undefined ? slide.link : base.link;
           const linkLabel = link ? (slide.linkLabel || defaultLinkLabel(type)) : '';
+          const caption = slide.caption !== undefined ? slide.caption : base.caption;
 
           resetDialogState();
           if (type) {
@@ -1560,6 +1728,7 @@
           }
 
           setDetails({ type, title, description, link, linkLabel }, animate);
+          setCaption(caption, animate);
           updateNavVisibility();
         };
 
@@ -1630,6 +1799,7 @@
             mediaSlot.innerHTML = '';
             mediaSlot.appendChild(node);
             setDetails(baseMeta, false);
+            setCaption(baseMeta.caption, false);
           }
 
           container.hidden = false;
@@ -1647,6 +1817,7 @@
           clearMedia();
           resetDialogState();
           stopSlideshow();
+          setCaption('', false);
           bodyEl.classList.remove('is-theatre-open');
           document.removeEventListener('keydown', handleKeydown, true);
 

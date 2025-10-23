@@ -1,0 +1,77 @@
+
+About / Overview
+- Interdisciplinary artist and technologist connecting live performance, studio craft, and narrative media.
+- Leads collaborative teams with clear communication, meticulous prep, and a focus on emotionally resonant results.
+- Equally at home in rehearsal rooms, editing suites, and production labs, translating ideas into experiences.
+
+
+Experience / Second Street Records
+- Lead producer and co-founder steering the label's artist development, release campaigns, and creative direction.
+- Built collaborative production workflows, coordinated marketing rollouts, and guided partnerships from demo to release-ready masters.
+
+Experience / Private Math Tutor
+- Guided secondary and college students through algebra, calculus, and statistics with tailored lessons aligned to their goals.
+- Combined diagnostic assessments, real-world examples, and iterative practice plans to build lasting confidence.
+
+Experience / Finance Professional
+- Collaborated with cross-functional teams to evaluate budgets, forecast cash flow, and communicate risk scenarios with clarity.
+- Developed lightweight dashboards that kept stakeholders aligned on KPIs, compliance deadlines, and strategic pivots.
+
+Creative / Select Music Releases
+- Selected releases highlight cross-genre collaborations, detailed vocal production, and narratives shaped for repeat listening.
+- Behind the scenes logs chronicle session setups, mix revisions, and mastering notes for future reference.
+- Produces records that balance cinematic scope with intimate performances, shaping arrangements and mixes end-to-end.
+- Leads hybrid studio workflows, coordinates session players, and keeps deliverables aligned with rollout calendars.
+- Coaches artists through arrangement choices, vocal takes, and post-production to keep every project intentional.
+
+Creative / Chance Release Loop
+- Maintain existing storytelling about Chance the Rapper's "Back to the Go" session and theatre embed; no changes required.
+
+Creative / Select Creative Partnerships
+- Live captures highlight collaborative direction across theatre residencies, tour stops, and hybrid streaming builds.
+- Detailed call sheets and pre-production decks align lighting, audio, and narrative beats before cameras roll.
+
+Creative / Media Industry
+- Storyboards music videos, concert films, and promotional shorts that extend sound into visual storytelling.
+- Workflow: Align creatives in pre-production, capture multi-cam performances, and deliver color-managed edits for broadcast and social releases.
+- Archives include documentaries, lyric videos, and live session reels ready for press kits and distributor briefs.
+
+Software / Untitled VoiceDAW App
+- Rapid-prototyped a voice-driven workstation that captures performances, transcribes takes, and routes stems without touching a mouse.
+- Modular engine supports scene-based arrangements, live looping, and MIDI control surfaces for adaptive shows.
+- Focus on accessibility ensures artists with mobility considerations can direct complex sessions with simple phrases.
+
+Software / Elemental VST Plugin
+- Designing a multi-band dynamics suite that pairs spectral analysis with intuitive macro controls musicians trust on stage.
+- Parameter locking, snapshot recall, and MIDI learn support slot seamlessly into modern DAW workflows.
+
+Software / DAW & Tool Expertise
+- Daily work in Logic Pro, Pro Tools, Ableton Live, and Reaper with custom templates tuned for editing speed and recall.
+- Builds macros, control surface mappings, and automation frameworks that translate across rooms and collaborators.
+- Hybrid routing bridges analog front ends with in-the-box precision without sacrificing spontaneity.
+
+Software / Placeholder Panel
+- Replace lorem ipsum with notes on future software concepts once content is finalized.
+
+Hardware / Studio Build
+- Purpose-built control room with tuned acoustics, modular furniture, and flexible routing to support rapid context switching.
+
+Hardware / Microcontrollers
+- Builds custom control surfaces, lighting cues, and automation rigs with Arduino, Raspberry Pi, and MIDI grid hardware.
+- Integrated show automation keeps playback, timecode, and lighting synchronized from rehearsal to performance.
+- Utility devices streamline studio ergonomics, power management, and patchbay routing under tight turnarounds.
+
+Hardware / Instrument Craft
+- Designs pedalboards, rewires guitars, and fabricates extended-range instruments to match each artist blueprint.
+- Focus: Stage-ready reliability, silent switching, and tones that travel well between studio and tour.
+- Detailed documentation supports future repairs, rentals, and collaborative builds.
+
+Hardware / Analog Audio & Soldering
+- Maintains outboard processing chains, patchbays, and summing rigs with calibrated gain staging and noise-floor audits.
+- Redundant power, mirrored storage, and emergency kits keep mission-critical sessions online when stakes are high.
+
+Contact / Reach Out
+- Email mcfarland.michael.p@gmail.com with project details, timelines, and any reference material you would like reviewed.
+
+Contact / Stay Connected
+- Follow along on social platforms, subscribe to release updates, or connect through GitHub.
